@@ -15,3 +15,4 @@ DATABASES = {
     }
 }
 
+MEDIA_ROOT = '/var/www/hithitcrit.co.uk/media/'
