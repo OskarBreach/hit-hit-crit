@@ -1,0 +1,29 @@
+<html>
+<head>
+    <style>
+        .cardgrid {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .card {
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+{% if card_list %}
+    <div class="cardgrid">
+    {% for card in card_list %}
+        <div class="card">
+            {% block cardimage %}{% if card.image %}<img src="{{ card.image.url }}"/>{% endif %}{% endblock %}
+            <div>{{ card.name }}</div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <div>No cards available.</div>
+{% endif %}
+</body>
+</html>
