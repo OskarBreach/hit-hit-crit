@@ -1,0 +1,3 @@
+[submodule "hithitcrit/xwingdata/xwing-data"]
+	path = hithitcrit/xwingdata/xwing-data
+	url = https://github.com/guidokessels/xwing-data.git
