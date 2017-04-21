@@ -16,3 +16,6 @@ DATABASES = {
 }
 
 MEDIA_ROOT = '/var/www/hithitcrit.co.uk/media/'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False 
