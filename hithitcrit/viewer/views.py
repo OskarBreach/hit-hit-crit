@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 
 from xwingdata.models import Pilot, Upgrade, ReferenceCard, Condition
 
@@ -20,6 +21,17 @@ def pilots(request):
 def pilot_by_id(request, id):
     pilot_list = Pilot.objects.filter(id=id).order_by('id')
     template = loader.get_template('expanded_pilots.html')
+    context = {
+        'card_list': pilot_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def pilots_by_ship(request, ship):
+    if ship != ship.lower():
+        return HttpResponseRedirect(reverse('pilots', kwargs={'ship': ship.lower()}))
+
+    pilot_list = Pilot.objects.filter(ship__url_name=ship).order_by('id')
+    template = loader.get_template('pilot_grid.html')
     context = {
         'card_list': pilot_list,
     }

@@ -3,7 +3,7 @@
 {% block expandedinformation %}
 <div><span class="bold">Name:</span> {{ card.name }}</div>
 <div><span class="bold">Unique:</span> {{ card.unique }}</div>
-<div><span class="bold">Ship:</span> {{ card.ship.name }}</div>
+<div><span class="bold">Ship:</span> <a href="{% url 'pilots-by-ship' ship=card.ship.url_name %}">{{ card.ship.name }}</a></div>
 <div><span class="bold">Skill:</span> {% if card.skill_special_ruling %}*{% else %}{{ card.skill }}{% endif %}</div>
 <div><span class="bold">Points:</span> {% if card.points_special_ruling %}*{% else %}{{ card.points }}{% endif %}</div>
 <div><span class="bold">Slots:</span> {% for slot in card.slots.all %}{{ slot.slot }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
