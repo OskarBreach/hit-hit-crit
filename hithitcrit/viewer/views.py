@@ -28,9 +28,31 @@ def pilot_by_id(request, id):
 
 def pilots_by_ship(request, ship):
     if ship != ship.lower():
-        return HttpResponseRedirect(reverse('pilots', kwargs={'ship': ship.lower()}))
+        return HttpResponseRedirect(reverse('pilots-by-ships', kwargs={'ship': ship.lower()}))
 
     pilot_list = Pilot.objects.filter(ship__url_name=ship).order_by('id')
+    template = loader.get_template('pilot_grid.html')
+    context = {
+        'card_list': pilot_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def pilots_by_faction(request, faction):
+    if faction != faction.lower():
+        return HttpResponseRedirect(reverse('pilots-by-faction', kwargs={'faction': faction.lower()}))
+
+    pilot_list = Pilot.objects.filter(faction__url_name=faction).order_by('id')
+    template = loader.get_template('pilot_grid.html')
+    context = {
+        'card_list': pilot_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def pilots_by_primary_faction(request, primary_faction):
+    if primary_faction != primary_faction.lower():
+        return HttpResponseRedirect(reverse('pilots-by-primary-faction', kwargs={'primary_faction': primary_faction.lower()}))
+
+    pilot_list = Pilot.objects.filter(faction__primary_faction__url_name=primary_faction).order_by('id')
     template = loader.get_template('pilot_grid.html')
     context = {
         'card_list': pilot_list,
