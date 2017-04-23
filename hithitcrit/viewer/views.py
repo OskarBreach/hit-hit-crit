@@ -26,6 +26,17 @@ def pilot_by_id(request, id):
     }
     return HttpResponse(template.render(context, request))
 
+def pilots_by_name(request, name):
+    if name != name.lower():
+        return HttpResponseRedirect(reverse('pilots-by-name', kwargs={'name': name.lower()}))
+
+    pilot_list = Pilot.objects.filter(url_name=name).order_by('id')
+    template = loader.get_template('pilot_grid.html')
+    context = {
+        'card_list': pilot_list,
+    }
+    return HttpResponse(template.render(context, request))
+
 def pilots_by_ship(request, ship):
     if ship != ship.lower():
         return HttpResponseRedirect(reverse('pilots-by-ships', kwargs={'ship': ship.lower()}))

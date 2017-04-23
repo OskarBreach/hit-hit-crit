@@ -1,7 +1,7 @@
 {% extends 'expanded_viewer.html' %}
 
 {% block expandedinformation %}
-<div><span class="bold">Name:</span> {{ card.name }}</div>
+<div><span class="bold">Name:</span> <a href="{% url 'pilots-by-name' name=card.url_name %}">{{ card.name }}</a></div>
 <div><span class="bold">Unique:</span> {{ card.unique }}</div>
 <div><span class="bold">Ship:</span> <a href="{% url 'pilots-by-ship' ship=card.ship.url_name %}">{{ card.ship.name }}</a></div>
 <div><span class="bold">Faction:</span> <a href="{% url 'pilots-by-faction' faction=card.faction.url_name %}">{{ card.faction.name }}</a> (<a href="{% url 'pilots-by-primary-faction' primary_faction=card.faction.primary_faction.url_name %}">{{ card.faction.primary_faction.name }}</a>)</div>
