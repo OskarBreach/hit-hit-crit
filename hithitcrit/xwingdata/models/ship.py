@@ -1,16 +1,12 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
-from re import sub
+from django.core.validators import MinValueValidator, MaxValueValidator
 
+from .named_model import NamedModel
 from .definition import Action, Faction, Bearing, Difficulty, Size
 
-class Ship(models.Model):
+class Ship(NamedModel):
     """Fields used by all ships, regardless of size."""
 
-    name = models.CharField(max_length=255, unique=True)
-    """The ship's name as written on the card itself."""
-    url_name = models.CharField(max_length=255, unique=True, validators=[RegexValidator(regex='^[a-z0-9\-]+$')])
-    """The ship's name used for hyperlinks."""
     faction = models.ManyToManyField(Faction)
     """A list of factions this ship belongs to."""
     attack = models.IntegerField(blank=True, null=True, default=0, validators=[MinValueValidator(0)])
@@ -36,13 +32,8 @@ class Ship(models.Model):
     epic_points = models.DecimalField(blank=True, null=True, default=0, decimal_places=1, max_digits=2, validators=[MinValueValidator(0)])
     """The ship's epic points value, as described in the X-Wing Epic Play Tournament Rules."""
 
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if getattr(self, 'name_changed', True):
-            self.url_name = sub(r'[^a-z0-9]', '-', self.name.lower())
-        super(Ship, self).save(*args, **kwargs)
+    class Meta:
+        unique_together = ('name',)
 
 class Dial(models.Model):
     ship = models.ForeignKey(Ship)

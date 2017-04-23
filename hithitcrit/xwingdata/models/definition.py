@@ -1,18 +1,17 @@
 from django.db import models
 
-class PrimaryFaction(models.Model):
-    primary_faction = models.CharField(max_length=255, unique=True)
+from .named_model import NamedModel
 
-    def __str__(self):
-        return self.primary_faction
+class PrimaryFaction(NamedModel):
+    class Meta:
+        unique_together = ('name',)
 
-class Faction(models.Model):
-    faction = models.CharField(max_length=255, unique=True)
+class Faction(NamedModel):
     primary_faction = models.ForeignKey(PrimaryFaction, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="factions/", blank=True)
 
-    def __str__(self):
-        return self.faction
+    class Meta:
+        unique_together = ('name',)
 
 class Size(models.Model):
     size = models.CharField(max_length=255, unique=True)

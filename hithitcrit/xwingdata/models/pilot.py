@@ -1,15 +1,14 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 
+from .named_model import NamedModel
 from .definition import Faction, Slot
 from .ship import Ship
 from .condition import Condition
 
-class Pilot(models.Model):
+class Pilot(NamedModel):
     """Schema for pilots data file"""
 
-    name = models.CharField(max_length=255)
-    """The pilot's name, as written on the card itself."""
     id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
     """The pilot's unique id number. It's not used in the game but it's used to link this pilot to other data in this dataset."""
     unique = models.BooleanField(default=False)

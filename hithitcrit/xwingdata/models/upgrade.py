@@ -1,13 +1,12 @@
 from django.db import models
 from django.core.validators import MinValueValidator, RegexValidator
 
+from .named_model import NamedModel
 from .definition import Action, Faction, Size, Slot
 from .ship import Ship
 from .condition import Condition
 
-class Upgrade(models.Model):
-    name = models.CharField(max_length=30)
-    """The upgrade's name as written on the card."""
+class Upgrade(NamedModel):
     id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
     """The upgrade's unique id number. It's not used in the game but it's used to link this upgrade to other data in this dataset."""
     slot = models.ForeignKey(Slot)

@@ -23,20 +23,16 @@ class Command(BaseCommand):
         db_alias = schema_editor.connection.alias
         
         PrimaryFaction = models.PrimaryFaction
-        PrimaryFaction.objects.using(db_alias).bulk_create([
-            PrimaryFaction(primary_faction="Rebel"),
-            PrimaryFaction(primary_faction="Imperial"),
-            PrimaryFaction(primary_faction="Scum"),
-            ])
+        PrimaryFaction(name="Rebel").save()
+        PrimaryFaction(name="Imperial").save()
+        PrimaryFaction(name="Scum").save()
         
         Faction = models.Faction
-        Faction.objects.using(db_alias).bulk_create([
-            Faction(faction="Rebel Alliance", primary_faction=PrimaryFaction.objects.get(primary_faction="Rebel")),
-            Faction(faction="Resistance", primary_faction=PrimaryFaction.objects.get(primary_faction="Rebel")),
-            Faction(faction="First Order", primary_faction=PrimaryFaction.objects.get(primary_faction="Imperial")),
-            Faction(faction="Galactic Empire", primary_faction=PrimaryFaction.objects.get(primary_faction="Imperial")),
-            Faction(faction="Scum and Villainy", primary_faction=PrimaryFaction.objects.get(primary_faction="Scum")),
-            ])
+        Faction(name="Rebel Alliance", primary_faction=PrimaryFaction.objects.get(name="Rebel")).save()
+        Faction(name="Resistance", primary_faction=PrimaryFaction.objects.get(name="Rebel")).save()
+        Faction(name="First Order", primary_faction=PrimaryFaction.objects.get(name="Imperial")).save()
+        Faction(name="Galactic Empire", primary_faction=PrimaryFaction.objects.get(name="Imperial")).save()
+        Faction(name="Scum and Villainy", primary_faction=PrimaryFaction.objects.get(name="Scum")).save()
         #TODO: set up Faction images
 
         Size = models.Size
@@ -172,16 +168,16 @@ class Command(BaseCommand):
         Size.objects.using(db_alias).filter(size="huge").delete()
 
         Faction = models.Faction
-        Faction.objects.using(db_alias).filter(faction="Rebel Alliance").delete()
-        Faction.objects.using(db_alias).filter(faction="Resistance").delete()
-        Faction.objects.using(db_alias).filter(faction="First Order").delete()
-        Faction.objects.using(db_alias).filter(faction="Galactic Empire").delete()
-        Faction.objects.using(db_alias).filter(faction="Scum and Villainy").delete()
+        Faction.objects.using(db_alias).filter(name="Rebel Alliance").delete()
+        Faction.objects.using(db_alias).filter(name="Resistance").delete()
+        Faction.objects.using(db_alias).filter(name="First Order").delete()
+        Faction.objects.using(db_alias).filter(name="Galactic Empire").delete()
+        Faction.objects.using(db_alias).filter(name="Scum and Villainy").delete()
 
         PrimaryFaction = models.PrimaryFaction
-        PrimaryFaction.objects.using(db_alias).filter(primary_faction="Rebel").delete()
-        PrimaryFaction.objects.using(db_alias).filter(primary_faction="Imperial").delete()
-        PrimaryFaction.objects.using(db_alias).filter(primary_faction="Scum").delete()
+        PrimaryFaction.objects.using(db_alias).filter(name="Rebel").delete()
+        PrimaryFaction.objects.using(db_alias).filter(name="Imperial").delete()
+        PrimaryFaction.objects.using(db_alias).filter(name="Scum").delete()
 
     def load_ships(self):
         schema_editor = connection.schema_editor()
@@ -210,7 +206,7 @@ class Command(BaseCommand):
                         'epic_points': decimal.Decimal(ship['epic_points']) if 'epic_points' in ship else None,})
             new_ship[0].faction.clear()
             for faction in ship['faction']:
-                new_ship[0].faction.add(Faction.objects.get(faction=faction))
+                new_ship[0].faction.add(Faction.objects.get(name=faction))
             new_ship[0].actions.clear()
             for action in ship['actions']:
                 new_ship[0].actions.add(Action.objects.get(action=action))
@@ -286,7 +282,7 @@ class Command(BaseCommand):
                         'points_special_ruling': pilot['points'] == '?',
                         'text': pilot['text'] if 'text' in pilot else "",
                         'image': pilot['image'] if 'image' in pilot else "",
-                        'faction': Faction.objects.get(faction=pilot['faction']),
+                        'faction': Faction.objects.get(name=pilot['faction']),
                         'xws': pilot['xws'],
                         'attack_override': pilot['ship_override']['attack'] if 'ship_override' in pilot else None,
                         'agility_override': pilot['ship_override']['agility'] if 'ship_override' in pilot else None,
@@ -352,7 +348,7 @@ class Command(BaseCommand):
                         'xws': upgrade['xws'],
                         'unique': bool(upgrade['unique']) if 'unique' in upgrade else False,
                         'effect': upgrade['effect'] if 'effect' in upgrade else "",
-                        'faction': Faction.objects.get(faction=upgrade['faction']) if 'faction' in upgrade else None,
+                        'faction': Faction.objects.get(name=upgrade['faction']) if 'faction' in upgrade else None,
                         'limited': bool(upgrade['limited']) if 'limited' in upgrade else False,
                         'energy': upgrade['energy'] if 'energy' in upgrade else None,
                         'grants_attack': grants_stat['attack'] if 'attack' in grants_stat else None,
