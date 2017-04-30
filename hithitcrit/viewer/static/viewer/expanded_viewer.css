@@ -1,0 +1,11 @@
+.cardimage {
+    float:left;
+}
+
+.expandedinformation {
+    display: inline-block;
+}
+
+.bold {
+    font-weight:bold;
+}

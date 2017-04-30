@@ -1,0 +1,9 @@
+.cardgrid {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.card {
+    display: inline-block;
+    vertical-align: top;
+}

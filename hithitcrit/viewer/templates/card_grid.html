@@ -1,16 +1,7 @@
+{% load static %}
 <html>
 <head>
-    <style>
-        .cardgrid {
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .card {
-            display: inline-block;
-            vertical-align: top;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static "viewer/card_grid.css" %}">
 </head>
 <body>
 {% if card_list %}

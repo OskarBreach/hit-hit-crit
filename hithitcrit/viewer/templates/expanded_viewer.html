@@ -1,18 +1,7 @@
+{% load static %}
 <html>
 <head>
-    <style>
-        .cardimage {
-            float:left;
-        }
-
-        .expandedinformation {
-            display: inline-block;
-        }
-
-        .bold {
-            font-weight:bold;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static "viewer/expanded_viewer.css" %}">
 </head>
 <body>
 {% if card_list %}
