@@ -7,7 +7,7 @@
 {% if card.faction %}<div><span class="bold">Faction:</span> {{ card.faction }}</div>{% endif %}
 {% if card.ship.all %}<div><span class="bold">Ship:</span> {% for ship in card.ship.all %}<a href="{% url 'pilots-by-ship' ship=ship.url_name %}">{{ ship.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 {% if card.size.all %}<div><span class="bold">Size:</span> {% for size in card.size.all %}{{ size.size }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
-<div><span class="bold">Slot:</span> {{ card.slot.slot }}</div>
+<div><span class="bold">Slot:</span> <a href="{% url 'upgrades-by-slot' slot=card.slot.url_name %}">{{ card.slot.name }}</a></div>
 <div><span class="bold">Points:</span> {{ card.points }}</div>
 {% if card.energy %}<div><span class="bold">Energy cost:</span> {{ card.energy }}</div>{% endif %}
 {% if card.attack %}<div><span class="bold">Attack:</span> {{ card.attack }}</div>{% endif %}
@@ -18,7 +18,7 @@
 {% if card.grants_agility %}<div><span class="bold">Grants agility:</span> {% if card.grants_agility > 0 %}+{% endif %}{{ card.grants_agility }}</div>{% endif %}
 {% if card.grants_hull %}<div><span class="bold">Grants hull:</span> {% if card.grants_hull > 0 %}+{% endif %}{{ card.grants_hull }}</div>{% endif %}
 {% if card.grants_shields %}<div><span class="bold">Grants shields:</span> {% if card.grants_shields > 0 %}+{% endif %}{{ card.grants_shields }}</div>{% endif %}
-{% if card.grants_slot.all %}<div><span class="bold">Grants slot:</span> {% for slot in card.grants_slot.all %}{{ slot.slot }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+{% if card.grants_slot.all %}<div><span class="bold">Grants slot:</span> {% for slot in card.grants_slot.all %}<a href="{% url 'upgrades-by-slot' slot=slot.url_name %}">{{ slot.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 {% if card.grants_action.all %}<div><span class="bold">Grants action:</span> {% for action in card.grants_action.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 {% if card.conditions.all %}<div><span class="bold">Conditions:</span> {% for condition in card.conditions.all %}{{ condition.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 <div><span class="bold">XWS:</span> {{ card.xws }}</div>

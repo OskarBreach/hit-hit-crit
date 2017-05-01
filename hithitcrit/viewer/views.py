@@ -86,6 +86,17 @@ def upgrade_by_id(request, id):
     }
     return HttpResponse(template.render(context, request))
 
+def upgrades_by_slot(request, slot):
+    if slot != slot.lower():
+        return HttpResponseRedirect(reverse('upgrades-by-slot', kwargs={'slot': slot.lower()}))
+
+    upgrade_list = Upgrade.objects.filter(slot__url_name=slot).order_by('id')
+    template = loader.get_template('upgrade_grid.html')
+    context = {
+        'card_list': upgrade_list,
+    }
+    return HttpResponse(template.render(context, request))
+
 def reference_cards(request):
     reference_card_list = ReferenceCard.objects.order_by('id')
     template = loader.get_template('reference_card_grid.html')

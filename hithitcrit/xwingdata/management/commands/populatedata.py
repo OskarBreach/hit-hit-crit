@@ -83,25 +83,23 @@ class Command(BaseCommand):
             ])
 
         Slot = models.Slot
-        Slot.objects.using(db_alias).bulk_create([
-            Slot(slot="Astromech"),
-            Slot(slot="Bomb"),
-            Slot(slot="Cannon"),
-            Slot(slot="Cargo"),
-            Slot(slot="Crew"),
-            Slot(slot="Elite"),
-            Slot(slot="Hardpoint"),
-            Slot(slot="Illicit"),
-            Slot(slot="Missile"),
-            Slot(slot="Modification"),
-            Slot(slot="Salvaged Astromech"),
-            Slot(slot="System"),
-            Slot(slot="Team"),
-            Slot(slot="Tech"),
-            Slot(slot="Title"),
-            Slot(slot="Torpedo"),
-            Slot(slot="Turret"),
-            ])
+        Slot(name="Astromech").save()
+        Slot(name="Bomb").save()
+        Slot(name="Cannon").save()
+        Slot(name="Cargo").save()
+        Slot(name="Crew").save()
+        Slot(name="Elite").save()
+        Slot(name="Hardpoint").save()
+        Slot(name="Illicit").save()
+        Slot(name="Missile").save()
+        Slot(name="Modification").save()
+        Slot(name="Salvaged Astromech").save()
+        Slot(name="System").save()
+        Slot(name="Team").save()
+        Slot(name="Tech").save()
+        Slot(name="Title").save()
+        Slot(name="Torpedo").save()
+        Slot(name="Turret").save()
 
     def rollback_definitions(self):
         # forwards_func() creates a number of instances,
@@ -110,23 +108,23 @@ class Command(BaseCommand):
         db_alias = schema_editor.connection.alias
 
         Slot = models.Slot
-        Slot.objects.using(db_alias).filter(slot="Astromech").delete()
-        Slot.objects.using(db_alias).filter(slot="Bomb").delete()
-        Slot.objects.using(db_alias).filter(slot="Cannon").delete()
-        Slot.objects.using(db_alias).filter(slot="Cargo").delete()
-        Slot.objects.using(db_alias).filter(slot="Crew").delete()
-        Slot.objects.using(db_alias).filter(slot="Elite").delete()
-        Slot.objects.using(db_alias).filter(slot="Hardpoint").delete()
-        Slot.objects.using(db_alias).filter(slot="Illicit").delete()
-        Slot.objects.using(db_alias).filter(slot="Missile").delete()
-        Slot.objects.using(db_alias).filter(slot="Modification").delete()
-        Slot.objects.using(db_alias).filter(slot="Salvaged Astromech").delete()
-        Slot.objects.using(db_alias).filter(slot="System").delete()
-        Slot.objects.using(db_alias).filter(slot="Team").delete()
-        Slot.objects.using(db_alias).filter(slot="Tech").delete()
-        Slot.objects.using(db_alias).filter(slot="Title").delete()
-        Slot.objects.using(db_alias).filter(slot="Torpedo").delete()
-        Slot.objects.using(db_alias).filter(slot="Turret").delete()
+        Slot.objects.using(db_alias).filter(name="Astromech").delete()
+        Slot.objects.using(db_alias).filter(name="Bomb").delete()
+        Slot.objects.using(db_alias).filter(name="Cannon").delete()
+        Slot.objects.using(db_alias).filter(name="Cargo").delete()
+        Slot.objects.using(db_alias).filter(name="Crew").delete()
+        Slot.objects.using(db_alias).filter(name="Elite").delete()
+        Slot.objects.using(db_alias).filter(name="Hardpoint").delete()
+        Slot.objects.using(db_alias).filter(name="Illicit").delete()
+        Slot.objects.using(db_alias).filter(name="Missile").delete()
+        Slot.objects.using(db_alias).filter(name="Modification").delete()
+        Slot.objects.using(db_alias).filter(name="Salvaged Astromech").delete()
+        Slot.objects.using(db_alias).filter(name="System").delete()
+        Slot.objects.using(db_alias).filter(name="Team").delete()
+        Slot.objects.using(db_alias).filter(name="Tech").delete()
+        Slot.objects.using(db_alias).filter(name="Title").delete()
+        Slot.objects.using(db_alias).filter(name="Torpedo").delete()
+        Slot.objects.using(db_alias).filter(name="Turret").delete()
 
         Difficulty = models.Difficulty
         Difficulty.objects.using(db_alias).filter(name="White").delete()
@@ -292,8 +290,8 @@ class Command(BaseCommand):
             new_pilot[0].slots.clear()
             if 'slots' in pilot:
                 for slot in pilot['slots']:
-                    PilotSlot.objects.update_or_create(pilot=new_pilot[0], slot=Slot.objects.get(slot=slot), defaults={
-                        'quantity': PilotSlot.objects.filter(pilot=new_pilot[0], slot=Slot.objects.get(slot=slot)).count() + 1,})
+                    PilotSlot.objects.update_or_create(pilot=new_pilot[0], slot=Slot.objects.get(name=slot), defaults={
+                        'quantity': PilotSlot.objects.filter(pilot=new_pilot[0], slot=Slot.objects.get(name=slot)).count() + 1,})
             new_pilot[0].conditions.clear()
             if 'conditions' in pilot:
                 for condition in pilot['conditions']:
@@ -338,7 +336,7 @@ class Command(BaseCommand):
 
             new_upgrade = Upgrade.objects.update_or_create(id=upgrade['id'],
                     defaults={'name': upgrade['name'],
-                        'slot': Slot.objects.get(slot=upgrade['slot']),
+                        'slot': Slot.objects.get(name=upgrade['slot']),
                         'slot_cost': 1,
                         'points': upgrade['points'],
                         'attack': upgrade['attack'] if 'attack' in upgrade else None,
@@ -362,8 +360,8 @@ class Command(BaseCommand):
                 for grant in upgrade['grants']:
                     if grant['type'] == "slot":
                         slot = grant['name']
-                        GrantsSlot.objects.update_or_create(upgrade=new_upgrade[0], slot=Slot.objects.get(slot=slot), defaults={
-                            'quantity': GrantsSlot.objects.filter(upgrade=new_upgrade[0], slot=Slot.objects.get(slot=slot)).count() + 1,})
+                        GrantsSlot.objects.update_or_create(upgrade=new_upgrade[0], slot=Slot.objects.get(name=slot), defaults={
+                            'quantity': GrantsSlot.objects.filter(upgrade=new_upgrade[0], slot=Slot.objects.get(name=slot)).count() + 1,})
                     elif grant['type'] == "action":
                         action = grant['name']
                         new_upgrade[0].grants_action.add(Action.objects.get(action=action))
