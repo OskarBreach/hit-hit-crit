@@ -1,0 +1,8 @@
+{% extends 'expanded_viewer.html' %}
+
+{% block expandedinformation %}
+<div><span class="bold">Name:</span> {{ card.name }}</div>
+<div><span class="bold">Ships:</span> {% for sourceship in card.sourceship_set.all %}<div><a href="{% url 'pilots-by-ship' ship=sourceship.ship.url_name %}">{{ sourceship.ship.name }}</a>{% if sourcesship.quantity > 1 %} (x{{ sourcesship.quantity }}){% endif %}</div>{% endfor %}</div>
+<div><span class="bold">Pilots:</span> {% for sourcepilot in card.sourcepilot_set.all %}<div><a href="{% url 'pilot-by-id' id=sourcepilot.pilot.id %}">{{ sourcepilot.pilot.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
+<div><span class="bold">Upgrades:</span> {% for sourceupgrade in card.sourceupgrade_set.all %}<div><a href="{% url 'upgrade-by-id' id=sourceupgrade.upgrade.id %}">{{ sourceupgrade.upgrade.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
+{% endblock %}

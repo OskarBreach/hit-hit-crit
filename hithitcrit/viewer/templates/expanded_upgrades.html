@@ -24,4 +24,5 @@
 {% if card.conditions.all %}<div><span class="bold">Conditions:</span> {% for condition in card.conditions.all %}<a href="{% url 'condition-by-name' name=condition.url_name %}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 <div><span class="bold">XWS:</span> {{ card.xws }}</div>
 <div><span class="bold">Id:</span> {{ card.id }}</div>
+<div><span class="bold">Found in:</span> {% for sourceupgrade in card.sourceupgrade_set.all %}<div><a href="{% url 'source-by-id' id=sourceupgrade.source.id %}">{{ sourceupgrade.source.name }}</a></div>{% endfor %}</div>
 {% endblock %}

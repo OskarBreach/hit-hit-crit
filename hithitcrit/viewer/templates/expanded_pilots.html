@@ -20,4 +20,5 @@
 {% if card.text %}<div><span class="bold">Text:</span> {{ card.text }}</div>{% endif %}
 <div><span class="bold">XWS:</span> {{ card.xws }}</div>
 <div><span class="bold">Id:</span> {{ card.id }}</div>
+<div><span class="bold">Found in:</span> {% for sourcepilot in card.sourcepilot_set.all %}<div><a href="{% url 'source-by-id' id=sourcepilot.source.id %}">{{ sourcepilot.source.name }}</a></div>{% endfor %}</div>
 {% endblock %}
