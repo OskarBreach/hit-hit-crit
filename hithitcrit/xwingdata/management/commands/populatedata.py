@@ -352,7 +352,7 @@ class Command(BaseCommand):
                         'grants_attack': grants_stat['attack'] if 'attack' in grants_stat else None,
                         'grants_agility': grants_stat['agility'] if 'agility' in grants_stat else None,
                         'grants_hull': grants_stat['hull'] if 'hull' in grants_stat else None,
-                        'grants_shields': grants_stat['shields'] if 'shield' in grants_stat else None,
+                        'grants_shields': grants_stat['shields'] if 'shields' in grants_stat else None,
                         'grants_skill': grants_stat['skill'] if 'skill' in grants_stat else None,})
             new_upgrade[0].grants_slot.clear()
             new_upgrade[0].grants_action.clear()
