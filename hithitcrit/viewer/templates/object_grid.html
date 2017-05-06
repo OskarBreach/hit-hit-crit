@@ -1,0 +1,73 @@
+{% load static %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{% static "viewer/object_grid.css" %}">
+</head>
+<body>
+{% if source_list %}
+<div class="category">Source{%if source_list|length > 1 %}s{% endif %}</div>
+<div class="cardgrid">
+{% for source in source_list %}
+  <div class="card">
+    {% if source.thumb %}
+    <a href="{% url 'source-by-id' source.id %}"><img src="{{ source.image.url }}"/></a>
+    {% endif %}
+    <div>{{ source.name }}</div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+{% if pilot_list %}
+<div class="category">Pilot{%if pilot_list|length > 1 %}s{% endif %}</div>
+<div class="cardgrid">
+{% for pilot in pilot_list %}
+  <div class="card">
+    {% if pilot.image %}
+    <a href="{% url 'pilot-by-id' pilot.id %}"><img src="{{ pilot.image.url }}"/></a>
+    {% endif %}
+    <div>{{ pilot.name }}</div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+{% if upgrade_list %}
+<div class="category">Upgrade{%if upgrade_list|length > 1 %}s{% endif %}</div>
+<div class="cardgrid">
+{% for upgrade in upgrade_list %}
+  <div class="card">
+    {% if upgrade.image %}
+    <a href="{% url 'upgrade-by-id' upgrade.id %}"><img src="{{ upgrade.image.url }}"/></a>
+    {% endif %}
+    <div>{{ upgrade.name }}</div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+{% if reference_card_list %}
+<div class="category">Reference card{%if reference_card_list|length > 1 %}s{% endif %}</div>
+<div class="cardgrid">
+{% for reference_card in reference_card_list %}
+  <div class="card">
+    {% if reference_card.image %}
+    <a href="{% url 'reference-card-by-id' reference_card.id %}"><img src="{{ reference_card.image.url }}"/></a>
+    {% endif %}
+    <div>{{ reference_card.title }} - {{ reference_card.subtitle }}</div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+{% if condition_list %}
+<div class="category">Condition{%if condition_list|length > 1 %}s{% endif %}</div>
+<div class="cardgrid">
+{% for condition in condition_list %}
+  <div class="card">
+    {% if condition.image %}
+    <a href="{% url 'condition-by-id' condition.id %}"><img src="{{ condition.image.url }}"/></a>
+    {% endif %}
+    <div>{{ condition.name }}</div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
+</body>
+</html>

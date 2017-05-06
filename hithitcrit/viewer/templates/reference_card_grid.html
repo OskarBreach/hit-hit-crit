@@ -1,3 +1,0 @@
-{% extends 'card_grid.html' %}
-
-{% block cardimage %}{% if card.image %}<a href="{% url 'reference-card-by-id' card.id %}"><img src="{{ card.image.url }}"/></a>{% endif %}{% endblock %}

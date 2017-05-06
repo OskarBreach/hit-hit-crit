@@ -1,3 +1,7 @@
+.category {
+    font-weight:bold;
+}
+
 .cardgrid {
     margin: 0 auto;
     text-align: center;
