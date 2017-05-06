@@ -28,8 +28,9 @@ def pilot_by_id(request, id):
     return HttpResponse(template.render(context, request))
 
 def pilots_by_name(request, name):
-    if name != name.lower():
-        return HttpResponseRedirect(reverse('pilots-by-name', kwargs={'name': name.lower()}))
+    clean_name = url_name(name)
+    if name != clean_name:
+        return HttpResponseRedirect(reverse('pilots-by-name', kwargs={'name': clean_name}))
 
     pilot_list = Pilot.objects.filter(url_name=name).order_by('id')
     template = loader.get_template('pilot_grid.html')
@@ -39,8 +40,9 @@ def pilots_by_name(request, name):
     return HttpResponse(template.render(context, request))
 
 def pilots_by_ship(request, ship):
-    if ship != ship.lower():
-        return HttpResponseRedirect(reverse('pilots-by-ships', kwargs={'ship': ship.lower()}))
+    clean_name = url_name(ship)
+    if ship != clean_name:
+        return HttpResponseRedirect(reverse('pilots-by-ships', kwargs={'ship': clean_name}))
 
     pilot_list = Pilot.objects.filter(ship__url_name=ship).order_by('id')
     template = loader.get_template('pilot_grid.html')
@@ -50,8 +52,9 @@ def pilots_by_ship(request, ship):
     return HttpResponse(template.render(context, request))
 
 def pilots_by_faction(request, faction):
-    if faction != faction.lower():
-        return HttpResponseRedirect(reverse('pilots-by-faction', kwargs={'faction': faction.lower()}))
+    clean_name = url_name(faction)
+    if faction != clean_name:
+        return HttpResponseRedirect(reverse('pilots-by-faction', kwargs={'faction': clean_name}))
 
     pilot_list = Pilot.objects.filter(faction__url_name=faction).order_by('id')
     template = loader.get_template('pilot_grid.html')
@@ -61,8 +64,9 @@ def pilots_by_faction(request, faction):
     return HttpResponse(template.render(context, request))
 
 def pilots_by_primary_faction(request, primary_faction):
-    if primary_faction != primary_faction.lower():
-        return HttpResponseRedirect(reverse('pilots-by-primary-faction', kwargs={'primary_faction': primary_faction.lower()}))
+    clean_name = url_name(primary_faction)
+    if primary_faction != clean_name:
+        return HttpResponseRedirect(reverse('pilots-by-primary-faction', kwargs={'primary_faction': clean_name}))
 
     pilot_list = Pilot.objects.filter(faction__primary_faction__url_name=primary_faction).order_by('id')
     template = loader.get_template('pilot_grid.html')
@@ -88,8 +92,9 @@ def upgrade_by_id(request, id):
     return HttpResponse(template.render(context, request))
 
 def upgrades_by_name(request, name):
-    if name != name.lower():
-        return HttpResponseRedirect(reverse('upgrades-by-name', kwargs={'name': name.lower()}))
+    clean_name = url_name(name)
+    if name != clean_name:
+        return HttpResponseRedirect(reverse('upgrades-by-name', kwargs={'name': clean_name}))
 
     upgrade_list = Upgrade.objects.filter(url_name=name).order_by('id')
     template = loader.get_template('upgrade_grid.html')
@@ -99,8 +104,9 @@ def upgrades_by_name(request, name):
     return HttpResponse(template.render(context, request))
 
 def upgrades_by_slot(request, slot):
-    if slot != slot.lower():
-        return HttpResponseRedirect(reverse('upgrades-by-slot', kwargs={'slot': slot.lower()}))
+    clean_name = url_name(slot)
+    if slot != clean_name:
+        return HttpResponseRedirect(reverse('upgrades-by-slot', kwargs={'slot': clean_name}))
 
     upgrade_list = Upgrade.objects.filter(slot__url_name=slot).order_by('id')
     template = loader.get_template('upgrade_grid.html')
@@ -142,8 +148,9 @@ def condition_by_id(request, id):
     return HttpResponse(template.render(context, request))
 
 def condition_by_name(request, name):
-    if name != url_name(name):
-        return HttpResponseRedirect(reverse('condition-by-name', kwargs={'name': url_name(name)}))
+    clean_name = url_name(name)
+    if name != clean_name:
+        return HttpResponseRedirect(reverse('condition-by-name', kwargs={'name': clean_name}))
 
     condition_list = Condition.objects.filter(url_name=name).order_by('id')
     template = loader.get_template('expanded_conditions.html')
