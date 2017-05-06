@@ -51,7 +51,7 @@
       <div><span class="bold">Epic points:</span> {{ pilot.ship.epic_points }}</div>
       {% endif %}
       {% if pilot.ship.attack or pilot.attack_override %}
-      <div><span class="bold">Attack:</span> {% if pilot.attack_override %}{{ pilot.attack_override }}{% else %}{{ pilot.ship.attack }}{% endif %}</div>i
+      <div><span class="bold">Attack:</span> {% if pilot.attack_override %}{{ pilot.attack_override }}{% else %}{{ pilot.ship.attack }}{% endif %}</div>
       {% endif %}
       {% if pilot.range != "" %}
       <div><span class="bold">Range:</span> {{ pilot.range }}</div>
@@ -70,7 +70,7 @@
       {% if pilot.text %}
       <div><span class="bold">Text:</span> {{ pilot.text }}</div>
       {% endif %}
-      <div><span class="bold">XWS:</span> {{ pilot.xws }}</div>
+      <div><span class="bold">XWS:</span> <a href="{% url 'object-by-xws' xws=pilot.xws %}">{{ pilot.xws }}</a></div>
       <div><span class="bold">Id:</span> {{ pilot.id }}</div>
       <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{% url 'source-by-id' id=sourcepilot.source.id %}">{{ sourcepilot.source.name }}</a></div>{% endfor %}</div>
     </div>
@@ -140,7 +140,7 @@
       {% if upgrade.conditions.all %}
       <div><span class="bold">Conditions:</span> {% for condition in upgrade.conditions.all %}<a href="{% url 'condition-by-name' name=condition.url_name %}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
-      <div><span class="bold">XWS:</span> {{ upgrade.xws }}</div>
+      <div><span class="bold">XWS:</span> <a href="{% url 'object-by-xws' xws=upgrade.xws %}">{{ upgrade.xws }}</a></div>
       <div><span class="bold">Id:</span> {{ upgrade.id }}</div>
       <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{% url 'source-by-id' id=sourceupgrade.source.id %}">{{ sourceupgrade.source.name }}</a></div>{% endfor %}</div>
     </div>
@@ -161,7 +161,7 @@
     <div class="expandedinformation">
       <div><span class="bold">Name:</span> <a href="{% url 'condition-by-name' name=condition.url_name %}">{{ condition.name }}</a></div>
       <div><span class="bold">Unique:</span> {{ condition.unique }}</div>
-      <div><span class="bold">XWS:</span> {{ condition.xws }}</div>
+      <div><span class="bold">XWS:</span> <a href="{% url 'object-by-xws' xws=condition.xws %}">{{ condition.xws }}</a></div>
       <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{% url 'source-by-id' id=source.id %}">{{ source.name }}</a></div>{% endfor %}</div>
     </div>
   </div>
