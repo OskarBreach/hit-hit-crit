@@ -1,0 +1,25 @@
+.category {
+    font-weight:bold;
+}
+
+.cardgrid {
+    overflow: hidden;
+}
+
+.cardimage {
+    float:left;
+    padding-bottom: 4px;
+}
+
+.expandedinformation {
+    overflow: hidden;
+    padding-left: 4px;
+}
+
+.bold {
+    font-weight:bold;
+}
+
+.card {
+    clear:left;
+}

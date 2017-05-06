@@ -11,6 +11,26 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+def objects_by_name(request, name):
+    clean_name = url_name(name)
+    if name != clean_name:
+        return HttpResponseRedirect(reverse('objects-by-name', kwargs={'name': clean_name}))
+
+    source_list = Source.objects.filter(name=name).order_by('id')
+    pilot_list = Pilot.objects.filter(url_name=name).order_by('id')
+    upgrade_list = Upgrade.objects.filter(url_name=name).order_by('id')
+    condition_list = Condition.objects.filter(url_name=name).order_by('id')
+    reference_card_list = ReferenceCard.objects.filter(title=name).order_by('id')
+    template = loader.get_template('expanded_details.html')
+    context = {
+        'source_list': source_list,
+        'pilot_list': pilot_list,
+        'upgrade_list': upgrade_list,
+        'condition_list': condition_list,
+        'reference_card_list': condition_list,
+    }
+    return HttpResponse(template.render(context, request))
+
 def pilots(request):
     pilot_list = Pilot.objects.order_by('id')
     template = loader.get_template('pilot_grid.html')
@@ -21,9 +41,9 @@ def pilots(request):
 
 def pilot_by_id(request, id):
     pilot_list = Pilot.objects.filter(id=id).order_by('id')
-    template = loader.get_template('expanded_pilots.html')
+    template = loader.get_template('expanded_details.html')
     context = {
-        'card_list': pilot_list,
+        'pilot_list': pilot_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -85,9 +105,9 @@ def upgrades(request):
 
 def upgrade_by_id(request, id):
     upgrade_list = Upgrade.objects.filter(id=id).order_by('id')
-    template = loader.get_template('expanded_upgrades.html')
+    template = loader.get_template('expanded_details.html')
     context = {
-        'card_list': upgrade_list,
+        'upgrade_list': upgrade_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -125,9 +145,9 @@ def reference_cards(request):
 
 def reference_card_by_id(request, id):
     reference_card_list = ReferenceCard.objects.filter(id=id).order_by('id')
-    template = loader.get_template('expanded_reference_cards.html')
+    template = loader.get_template('expanded_details.html')
     context = {
-        'card_list': reference_card_list,
+        'reference_card_list': reference_card_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -141,9 +161,9 @@ def conditions(request):
 
 def condition_by_id(request, id):
     condition_list = Condition.objects.filter(id=id).order_by('id')
-    template = loader.get_template('expanded_conditions.html')
+    template = loader.get_template('expanded_details.html')
     context = {
-        'card_list': condition_list,
+        'condition_list': condition_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -153,9 +173,9 @@ def condition_by_name(request, name):
         return HttpResponseRedirect(reverse('condition-by-name', kwargs={'name': clean_name}))
 
     condition_list = Condition.objects.filter(url_name=name).order_by('id')
-    template = loader.get_template('expanded_conditions.html')
+    template = loader.get_template('expanded_details.html')
     context = {
-        'card_list': condition_list,
+        'condition_list': condition_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -169,8 +189,8 @@ def sources(request):
 
 def source_by_id(request, id):
     source_list = Source.objects.filter(id=id).order_by('id')
-    template = loader.get_template('expanded_sources.html')
+    template = loader.get_template('expanded_details.html')
     context = {
-        'card_list': source_list,
+        'source_list': source_list,
     }
     return HttpResponse(template.render(context, request))
