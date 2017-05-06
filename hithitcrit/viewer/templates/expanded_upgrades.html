@@ -1,7 +1,7 @@
 {% extends 'expanded_viewer.html' %}
 
 {% block expandedinformation %}
-<div><span class="bold">Name:</span> {{ card.name }}</div>
+<div><span class="bold">Name:</span> <a href="{% url 'upgrades-by-name' name=card.url_name %}">{{ card.name }}</a></div>
 <div><span class="bold">Unique:</span> {{ card.unique }}</div>
 <div><span class="bold">Limited:</span> {{ card.limited }}</div>
 {% if card.faction %}<div><span class="bold">Faction:</span> {{ card.faction }}</div>{% endif %}

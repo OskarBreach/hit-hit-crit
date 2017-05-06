@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^(?i)pilots/primary-faction/(?P<primary_faction>[\w]+)/$', views.pilots_by_primary_faction, name='pilots-by-primary-faction'),
     url(r'^(?i)upgrades/$', views.upgrades, name='upgrades'),
     url(r'^(?i)upgrades/id/(?P<id>\d+)/$', views.upgrade_by_id, name='upgrade-by-id'),
+    url(r'^(?i)upgrades/name/(?P<name>[-\w]+)/$', views.upgrades_by_name, name='upgrades-by-name'),
     url(r'^(?i)upgrades/slot/(?P<slot>[-\w]+)/$', views.upgrades_by_slot, name='upgrades-by-slot'),
     url(r'^(?i)reference-cards/$', views.reference_cards, name='reference-cards'),
     url(r'^(?i)reference-cards/id/(?P<id>\d+)/$', views.reference_card_by_id, name='reference-card-by-id'),
