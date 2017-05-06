@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^(?i)conditions/$', views.conditions, name='conditions'),
     url(r'^(?i)conditions/id/(?P<id>\d+)/$', views.condition_by_id, name='condition-by-id'),
     url(r'^(?i)conditions/name/(?P<name>[-\w\ ]+)/$', views.condition_by_name, name='condition-by-name'),
+    url(r'^(?i)sources/$', views.sources, name='sources'),
+    url(r'^(?i)sources/id/(?P<id>\d+)/$', views.source_by_id, name='source-by-id'),
 ]

@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 
-from xwingdata.models import Pilot, Upgrade, ReferenceCard, Condition
+from xwingdata.models import Pilot, Upgrade, ReferenceCard, Condition, Source
 from xwingdata.models.named_model import url_name
 
 def index(request):
@@ -156,5 +156,21 @@ def condition_by_name(request, name):
     template = loader.get_template('expanded_conditions.html')
     context = {
         'card_list': condition_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def sources(request):
+    source_list = Source.objects.order_by('id')
+    template = loader.get_template('source_grid.html')
+    context = {
+        'card_list': source_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def source_by_id(request, id):
+    source_list = Source.objects.filter(id=id).order_by('id')
+    template = loader.get_template('expanded_sources.html')
+    context = {
+        'card_list': source_list,
     }
     return HttpResponse(template.render(context, request))
