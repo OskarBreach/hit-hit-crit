@@ -4,4 +4,5 @@
 <div><span class="bold">Name:</span> <a href="{% url 'condition-by-name' name=card.url_name %}">{{ card.name }}</a></div>
 <div><span class="bold">Unique:</span> {{ card.unique }}</div>
 <div><span class="bold">XWS:</span> {{ card.xws }}</div>
+<div><span class="bold">Found in:</span> {% for source in card.source_set.all %}<div><a href="{% url 'source-by-id' id=source.id %}">{{ source.name }}</a></div>{% endfor %}</div>
 {% endblock %}
