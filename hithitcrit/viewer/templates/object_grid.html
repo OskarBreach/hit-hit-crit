@@ -10,7 +10,7 @@
 {% for source in source_list %}
   <div class="card">
     {% if source.thumb %}
-    <a href="{% url 'source-by-id' source.id %}"><img src="{{ source.image.url }}"/></a>
+    <a href="{% url 'source-by-id' source.id %}"><img src="{{ source.thumb.url }}"/></a>
     {% endif %}
     <div>{{ source.name }}</div>
   </div>
