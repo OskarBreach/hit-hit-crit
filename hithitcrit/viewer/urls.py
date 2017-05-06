@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^(?i)reference-cards/id/(?P<id>\d+)/$', views.reference_card_by_id, name='reference-card-by-id'),
     url(r'^(?i)conditions/$', views.conditions, name='conditions'),
     url(r'^(?i)conditions/id/(?P<id>\d+)/$', views.condition_by_id, name='condition-by-id'),
+    url(r'^(?i)conditions/name/(?P<name>[-\w\ ]+)/$', views.condition_by_name, name='condition-by-name'),
 ]

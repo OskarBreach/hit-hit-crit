@@ -2,6 +2,13 @@ from django.db import models
 from django.core.validators import RegexValidator
 from re import sub
 
+def url_name(name):
+    name = name.lower()
+    name = sub(r'[^ a-z0-9-]', '', name)
+    name = sub(r' +', '-', name)
+
+    return name
+
 class NamedModel(models.Model):
     """Fields used by all named models, regardless of type."""
 
@@ -15,7 +22,7 @@ class NamedModel(models.Model):
 
     def save(self, *args, **kwargs):
         if getattr(self, 'name_changed', True):
-            self.url_name = sub(r' +', '-', sub(r'[^a-z0-9]', ' ', self.name.lower()).strip())
+            self.url_name = url_name(self.name)
         super(NamedModel, self).save(*args, **kwargs)
 
     class Meta:

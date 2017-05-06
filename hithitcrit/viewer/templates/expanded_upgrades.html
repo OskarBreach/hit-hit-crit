@@ -21,7 +21,7 @@
 {% if card.grants_skill %}<div><span class="bold">Grants skill:</span> {% if card.grants_skill > 0 %}+{% endif %}{{ card.grants_skill }}</div>{% endif %}
 {% if card.grantsslot_set.all %}<div><span class="bold">Grants slot:</span> {% for grant in card.grantsslot_set.all %}<a href="{% url 'upgrades-by-slot' slot=grant.slot.url_name %}">{{ grant.slot.name }}</a>{% if grant.quantity > 1 %} (x{{ grant.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 {% if card.grants_action.all %}<div><span class="bold">Grants action:</span> {% for action in card.grants_action.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
-{% if card.conditions.all %}<div><span class="bold">Conditions:</span> {% for condition in card.conditions.all %}{{ condition.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+{% if card.conditions.all %}<div><span class="bold">Conditions:</span> {% for condition in card.conditions.all %}<a href="{% url 'condition-by-name' name=condition.url_name %}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 <div><span class="bold">XWS:</span> {{ card.xws }}</div>
 <div><span class="bold">Id:</span> {{ card.id }}</div>
 {% endblock %}

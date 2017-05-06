@@ -3,6 +3,7 @@ from django.template import loader
 from django.urls import reverse
 
 from xwingdata.models import Pilot, Upgrade, ReferenceCard, Condition
+from xwingdata.models.named_model import url_name
 
 def index(request):
     template = loader.get_template('index.html')
@@ -134,6 +135,17 @@ def conditions(request):
 
 def condition_by_id(request, id):
     condition_list = Condition.objects.filter(id=id).order_by('id')
+    template = loader.get_template('expanded_conditions.html')
+    context = {
+        'card_list': condition_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+def condition_by_name(request, name):
+    if name != url_name(name):
+        return HttpResponseRedirect(reverse('condition-by-name', kwargs={'name': url_name(name)}))
+
+    condition_list = Condition.objects.filter(url_name=name).order_by('id')
     template = loader.get_template('expanded_conditions.html')
     context = {
         'card_list': condition_list,
