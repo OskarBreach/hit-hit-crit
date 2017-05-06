@@ -29,9 +29,9 @@ class Upgrade(NamedModel):
     """Some upgrade cards have unique names, which are identified by the bullet to the left of the name.
     A player cannot field two or more cards that share the same unique name, even if those cards are of different types.
     """
-    size = models.ManyToManyField(Size)
+    size = models.ManyToManyField(Size, blank=True)
     """The ship sizes this upgrade is restricted to."""
-    effect = models.CharField(max_length=255)
+    effect = models.CharField(max_length=255, blank=True)
     """Some upgrades have effects, like bomb tokens.
     The text for such effects go here."""
     faction = models.ForeignKey(Faction, null=True, blank=True)
