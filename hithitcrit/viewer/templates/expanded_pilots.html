@@ -14,7 +14,7 @@
 <div><span class="bold">Agility:</span> {% if card.agility_override %}{{ card.agility_override }}{% else %}{{ card.ship.agility }}{% endif %}</div>
 <div><span class="bold">Hull:</span> {% if card.hull_override %}{{ card.hull_override }}{% else %}{{ card.ship.hull }}{% endif %}</div>
 <div><span class="bold">Shields:</span> {% if card.shields_override %}{{ card.shields_override }}{% else %}{{ card.ship.shields }}{% endif %}</div>
-<div><span class="bold">Slots:</span> {% for slot in card.pilotslot_set.all %}<a href="{% url 'upgrades-by-slot' slot=slot.slot.url_name %}">{{ slot.slot.name }}</a>{% if slot.quantity > 1 %} (x{{ slot.quantity }}){%endif%}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+<div><span class="bold">Slots:</span> {% for slot in card.pilotslot_set.all %}<a href="{% url 'upgrades-by-slot' slot=slot.slot.url_name %}">{{ slot.slot.name }}</a>{% if slot.quantity > 1 %} (x{{ slot.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
 <div><span class="bold">Actions:</span> {% for action in card.ship.actions.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
 {% if card.conditions.all %}<div><span class="bold">Conditions:</span> {% for condition in card.conditions.all %}{{ condition.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>{% endif %}
 {% if card.text %}<div><span class="bold">Text:</span> {{ card.text }}</div>{% endif %}
