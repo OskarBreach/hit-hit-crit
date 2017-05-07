@@ -16,7 +16,7 @@
     </div>
     <div class="expandedinformation">
       <div><span class="bold">Name:</span> {{ source.name }}</div>
-      <div><span class="bold">Ships:</span> {% for sourceship in source.sourceship_set.all %}<div><a href="{% url 'pilots-by-ship' ship=sourceship.ship.url_name %}">{{ sourceship.ship.name }}</a>{% if sourcesship.quantity > 1 %} (x{{ sourcesship.quantity }}){% endif %}</div>{% endfor %}</div>
+      <div><span class="bold">Ships:</span> {% for sourcesship in source.sourceship_set.all %}<div><a href="{% url 'pilots-by-ship' ship=sourcesship.ship.url_name %}">{{ sourcesship.ship.name }}</a>{% if sourcesship.quantity > 1 %} (x{{ sourcesship.quantity }}){% endif %}</div>{% endfor %}</div>
       <div><span class="bold">Pilots:</span> {% for sourcepilot in source.sourcepilot_set.all %}<div><a href="{% url 'pilot-by-id' id=sourcepilot.pilot.id %}">{{ sourcepilot.pilot.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
       <div><span class="bold">Upgrades:</span> {% for sourceupgrade in source.sourceupgrade_set.all %}<div><a href="{% url 'upgrade-by-id' id=sourceupgrade.upgrade.id %}">{{ sourceupgrade.upgrade.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
       {% if source.reference_cards.all %}
@@ -72,7 +72,7 @@
       {% endif %}
       <div><span class="bold">XWS:</span> <a href="{% url 'object-by-xws' xws=pilot.xws %}">{{ pilot.xws }}</a></div>
       <div><span class="bold">Id:</span> {{ pilot.id }}</div>
-      <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{% url 'source-by-id' id=sourcepilot.source.id %}">{{ sourcepilot.source.name }}</a></div>{% endfor %}</div>
+      <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{% url 'source-by-id' id=sourcepilot.source.id %}">{{ sourcepilot.source.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
     </div>
   </div>
 {% endfor %}
@@ -142,7 +142,7 @@
       {% endif %}
       <div><span class="bold">XWS:</span> <a href="{% url 'object-by-xws' xws=upgrade.xws %}">{{ upgrade.xws }}</a></div>
       <div><span class="bold">Id:</span> {{ upgrade.id }}</div>
-      <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{% url 'source-by-id' id=sourceupgrade.source.id %}">{{ sourceupgrade.source.name }}</a></div>{% endfor %}</div>
+      <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{% url 'source-by-id' id=sourceupgrade.source.id %}">{{ sourceupgrade.source.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
     </div>
   </div>
 {% endfor %}
