@@ -1,0 +1,59 @@
+body {
+    font-family: 'Russo One', sans-serif;
+}
+
+.category {
+    font-weight: bold;
+}
+
+.object-grid {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.object {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.object-image {
+    height: 418px;
+    width: 300px;
+    resize: both;
+}
+
+.card-image {
+    height: 418px;
+    width: 300px;
+    resize: both;
+}
+
+.half-card-image {
+    height: 300px;
+    width: 194px;
+    resize: both;
+}
+
+.object-link {
+    text-align: center;
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.3s linear;
+    -webkit-transition: color 0.3s linear;
+    -moz-transition: color 0.3s linear;
+}
+.object-link:hover {
+    color: #F44336;
+}
+
+.object-link-box {
+    width: 300px;
+}
+
+.card-link-box {
+    width: 300px;
+}
+
+.half-card-link-box {
+    width: 194px;
+}

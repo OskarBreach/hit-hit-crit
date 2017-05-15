@@ -1,3 +1,7 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 .category {
     font-weight:bold;
 }
@@ -17,9 +21,19 @@
 }
 
 .bold {
-    font-weight:bold;
+    font-family: 'Russo One', sans-serif;
 }
 
 .card {
     clear:left;
+}
+
+.card-image-full {
+    height:418px;
+    width:300px;
+}
+
+.card-image-half {
+    height:300px;
+    width:194px;
 }

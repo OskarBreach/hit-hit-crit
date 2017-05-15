@@ -2,6 +2,8 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="{% static "viewer/expanded_details.css" %}">
+<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
 {% if source_list %}
@@ -31,7 +33,7 @@
 </div>
 {% endif %}
 {% if pilot_list %}
-<div class="category">Pilot{%if pilot_list|length > 1 %}s{% endif %}</div>
+<div class="bold">Pilot{%if pilot_list|length > 1 %}s{% endif %}</div>
 <div class="cardgrid">
 {% for pilot in pilot_list %}
   <div class="card">
