@@ -5,7 +5,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^(?i)name/(?P<name>[-\w\ ]+)/$', views.objects_by_name, name='objects-by-name'),
-    url(r'^(?i)xws/(?P<xws>[-\w]+)/$', views.object_by_xws, name='object-by-xws'),
     url(r'^(?i)pilots/$', views.pilots, name='pilots'),
     url(r'^(?i)pilots/id/(?P<id>\d+)/$', views.pilot_by_id, name='pilot-by-id'),
     url(r'^(?i)pilots/name/(?P<name>[-\w\ ]+)/$', views.pilots_by_name, name='pilots-by-name'),

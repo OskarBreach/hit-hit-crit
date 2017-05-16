@@ -31,22 +31,6 @@ def objects_by_name(request, name):
     }
     return HttpResponse(template.render(context, request))
 
-def object_by_xws(request, xws):
-    clean_name = url_name(xws)
-    if xws != clean_name:
-        return HttpResponseRedirect(reverse('objects-by-xws', kwargs={'name': clean_name}))
-
-    pilot_list = Pilot.objects.filter(xws=xws).order_by('id')
-    upgrade_list = Upgrade.objects.filter(xws=xws).order_by('id')
-    condition_list = Condition.objects.filter(xws=xws).order_by('id')
-    template = loader.get_template('expanded_details.html')
-    context = {
-        'pilot_list': pilot_list,
-        'upgrade_list': upgrade_list,
-        'condition_list': condition_list,
-    }
-    return HttpResponse(template.render(context, request))
-
 def pilots(request):
     pilot_list = Pilot.objects.order_by('id')
     template = loader.get_template('grid.html')

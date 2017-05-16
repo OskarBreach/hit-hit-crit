@@ -2,12 +2,10 @@
 <div class="object-grid">
 {% for object in object_list %}
   <div class="object">
-    {% if object.thumb %}
-    {% block thumb-link %}<a href="{% url 'object-by-xws' object.xws %}"><img src="{{ object.thumb.url }}" class="object-image" alt="{{ object.name }}"//></a>{% endblock %}
-    {% elif object.image %}
-    {% block image-link %}<a href="{% url 'object-by-xws' object.xws %}"><img src="{{ object.image.url }}" class="object-image" alt="{{ object.name }}"//></a>{% endblock %}
+    {% if object.image %}
+    {% block image-link %}<img src="{{ object.image.url }}" class="object-image" alt="{{ object.name }}"/>{% endblock %}
     {% endif %}
-    {% block text-link %}<div class="object-link-box"><a class="object-link" href="{% url 'object-by-xws' object.xws %}">{{ object.name }}</a></div>{% endblock %}
+    {% block text-link %}<div class="object-link-box">{{ object.name }}</div>{% endblock %}
   </div>
 {% endfor %}
 </div>
