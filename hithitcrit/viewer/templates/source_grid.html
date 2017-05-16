@@ -1,9 +1,0 @@
-{% extends "object_grid.html" %}
-
-{% block grid_type %}Source{%if object_list|length > 1 %}s{% endif %}{% endblock %}
-
-{% block thumb-link %}<a href="{% url 'source-by-id' object.id %}"><img src="{{ object.thumb.url }}" class="card-image-full" alt="{{ object.name }}"//></a>{% endblock %}
-
-{% block image-link %}{% endblock %}
-
-{% block text-link %}<div class="card-link-box"><a class="object-link" href="{% url 'source-by-id' object.id %}">{{ object.name }}</a></div>{% endblock %}

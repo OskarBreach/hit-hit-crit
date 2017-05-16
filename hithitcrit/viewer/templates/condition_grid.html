@@ -1,7 +1,0 @@
-{% extends "object_grid.html" %}
-
-{% block grid_type %}Condition{%if object_list|length > 1 %}s{% endif %}{% endblock %}
-
-{% block image-link %}<a href="{% url 'condition-by-id' object.id %}"><img src="{{ object.image.url }}" class="half-card-image" alt="{{ object.name }}"//></a>{% endblock %}
-
-{% block text-link %}<div class="half-card-link-box"><a class="object-link" href="{% url 'condition-by-id' object.id %}">{{ object.name }}</a></div>{% endblock %}

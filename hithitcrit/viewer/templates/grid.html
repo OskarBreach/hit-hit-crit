@@ -5,11 +5,6 @@
 <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
 </head>
 <body>
-{% if source_list %}
-  {% with source_list as object_list %}
-    {% include "source_grid.html" %}
-  {% endwith %}
-{% endif %}
 {% if pilot_list %}
   {% with pilot_list as object_list %}
     {% include "pilot_grid.html" %}
@@ -18,16 +13,6 @@
 {% if upgrade_list %}
   {% with upgrade_list as object_list %}
     {% include "upgrade_grid.html" %}
-  {% endwith %}
-{% endif %}
-{% if reference_card_list %}
-  {% with reference_card_list as object_list %}
-    {% include "reference_card_grid.html" %}
-  {% endwith %}
-{% endif %}
-{% if condition_list %}
-  {% with condition_list as object_list %}
-    {% include "condition_grid.html" %}
   {% endwith %}
 {% endif %}
 </body>

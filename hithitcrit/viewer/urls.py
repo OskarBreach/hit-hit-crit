@@ -16,11 +16,8 @@ urlpatterns = [
     url(r'^(?i)upgrades/id/(?P<id>\d+)/$', views.upgrade_by_id, name='upgrade-by-id'),
     url(r'^(?i)upgrades/name/(?P<name>[-\w\ ]+)/$', views.upgrades_by_name, name='upgrades-by-name'),
     url(r'^(?i)upgrades/slot/(?P<slot>[-\w\ ]+)/$', views.upgrades_by_slot, name='upgrades-by-slot'),
-    url(r'^(?i)reference-cards/$', views.reference_cards, name='reference-cards'),
     url(r'^(?i)reference-cards/id/(?P<id>\d+)/$', views.reference_card_by_id, name='reference-card-by-id'),
-    url(r'^(?i)conditions/$', views.conditions, name='conditions'),
     url(r'^(?i)conditions/id/(?P<id>\d+)/$', views.condition_by_id, name='condition-by-id'),
     url(r'^(?i)conditions/name/(?P<name>[-\w\ ]+)/$', views.condition_by_name, name='condition-by-name'),
-    url(r'^(?i)sources/$', views.sources, name='sources'),
     url(r'^(?i)sources/id/(?P<id>\d+)/$', views.source_by_id, name='source-by-id'),
 ]

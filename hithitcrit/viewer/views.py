@@ -151,27 +151,11 @@ def upgrades_by_slot(request, slot):
     }
     return HttpResponse(template.render(context, request))
 
-def reference_cards(request):
-    reference_card_list = ReferenceCard.objects.order_by('id')
-    template = loader.get_template('grid.html')
-    context = {
-        'reference_card_list': reference_card_list,
-    }
-    return HttpResponse(template.render(context, request))
-
 def reference_card_by_id(request, id):
     reference_card_list = ReferenceCard.objects.filter(id=id).order_by('id')
     template = loader.get_template('expanded_details.html')
     context = {
         'reference_card_list': reference_card_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-def conditions(request):
-    condition_list = Condition.objects.order_by('id')
-    template = loader.get_template('grid.html')
-    context = {
-        'condition_list': condition_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -192,14 +176,6 @@ def condition_by_name(request, name):
     template = loader.get_template('expanded_details.html')
     context = {
         'condition_list': condition_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-def sources(request):
-    source_list = Source.objects.order_by('id')
-    template = loader.get_template('grid.html')
-    context = {
-        'source_list': source_list,
     }
     return HttpResponse(template.render(context, request))
 
