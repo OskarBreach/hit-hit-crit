@@ -1,9 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
-from xwingdata.models import Pilot, Upgrade, ReferenceCard, Condition, Source
-from xwingdata.models.named_model import url_name
+from xwingdata.models import Pilot, Upgrade, Ship, Faction, PrimaryFaction, Slot, ReferenceCard, Condition, Source
 
 def index(request):
     template = loader.get_template('index.html')
@@ -12,14 +12,14 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def objects_by_name(request, name):
-    clean_name = url_name(name)
+    clean_name = slugify(name)
     if name != clean_name:
         return HttpResponseRedirect(reverse('objects-by-name', kwargs={'name': clean_name}))
 
     source_list = Source.objects.filter(name=name).order_by('id')
-    pilot_list = Pilot.objects.filter(url_name=name).order_by('id')
-    upgrade_list = Upgrade.objects.filter(url_name=name).order_by('id')
-    condition_list = Condition.objects.filter(url_name=name).order_by('id')
+    pilot_list = Pilot.objects.filter(slug=name).order_by('id')
+    upgrade_list = Upgrade.objects.filter(slug=name).order_by('id')
+    condition_list = Condition.objects.filter(slug=name).order_by('id')
     reference_card_list = ReferenceCard.objects.filter(title=name).order_by('id')
     template = loader.get_template('expanded_details.html')
     context = {
@@ -39,56 +39,35 @@ def pilots(request):
     }
     return HttpResponse(template.render(context, request))
 
-def pilot_by_id(request, id):
-    pilot_list = Pilot.objects.filter(id=id).order_by('id')
+def pilot_details(request, slug):
+    pilot = get_object_or_404(Pilot, slug=slug)
     template = loader.get_template('expanded_details.html')
     context = {
-        'pilot_list': pilot_list,
+        'pilot_list': (pilot,),
     }
     return HttpResponse(template.render(context, request))
 
-def pilots_by_name(request, name):
-    clean_name = url_name(name)
-    if name != clean_name:
-        return HttpResponseRedirect(reverse('pilots-by-name', kwargs={'name': clean_name}))
-
-    pilot_list = Pilot.objects.filter(url_name=name).order_by('id')
+def ship_details(request, slug):
+    ship = get_object_or_404(Ship, slug=slug)
+    pilot_list = Pilot.objects.filter(ship=ship).order_by('id')
     template = loader.get_template('grid.html')
     context = {
         'pilot_list': pilot_list,
     }
     return HttpResponse(template.render(context, request))
 
-def pilots_by_ship(request, ship):
-    clean_name = url_name(ship)
-    if ship != clean_name:
-        return HttpResponseRedirect(reverse('pilots-by-ships', kwargs={'ship': clean_name}))
-
-    pilot_list = Pilot.objects.filter(ship__url_name=ship).order_by('id')
+def faction_details(request, slug):
+    faction = get_object_or_404(Faction, slug=slug)
+    pilot_list = Pilot.objects.filter(faction=faction).order_by('id')
     template = loader.get_template('grid.html')
     context = {
         'pilot_list': pilot_list,
     }
     return HttpResponse(template.render(context, request))
 
-def pilots_by_faction(request, faction):
-    clean_name = url_name(faction)
-    if faction != clean_name:
-        return HttpResponseRedirect(reverse('pilots-by-faction', kwargs={'faction': clean_name}))
-
-    pilot_list = Pilot.objects.filter(faction__url_name=faction).order_by('id')
-    template = loader.get_template('grid.html')
-    context = {
-        'pilot_list': pilot_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-def pilots_by_primary_faction(request, primary_faction):
-    clean_name = url_name(primary_faction)
-    if primary_faction != clean_name:
-        return HttpResponseRedirect(reverse('pilots-by-primary-faction', kwargs={'primary_faction': clean_name}))
-
-    pilot_list = Pilot.objects.filter(faction__primary_faction__url_name=primary_faction).order_by('id')
+def primary_faction_details(request, slug):
+    primary_faction = get_object_or_404(PrimaryFaction, slug=slug)
+    pilot_list = Pilot.objects.filter(faction__primary_faction=primary_faction).order_by('id')
     template = loader.get_template('grid.html')
     context = {
         'pilot_list': pilot_list,
@@ -103,32 +82,17 @@ def upgrades(request):
     }
     return HttpResponse(template.render(context, request))
 
-def upgrade_by_id(request, id):
-    upgrade_list = Upgrade.objects.filter(id=id).order_by('id')
+def upgrade_details(request, slug):
+    upgrade = get_object_or_404(Upgrade, slug=slug)
     template = loader.get_template('expanded_details.html')
     context = {
-        'upgrade_list': upgrade_list,
+        'upgrade_list': (upgrade,),
     }
     return HttpResponse(template.render(context, request))
 
-def upgrades_by_name(request, name):
-    clean_name = url_name(name)
-    if name != clean_name:
-        return HttpResponseRedirect(reverse('upgrades-by-name', kwargs={'name': clean_name}))
-
-    upgrade_list = Upgrade.objects.filter(url_name=name).order_by('id')
-    template = loader.get_template('grid.html')
-    context = {
-        'upgrade_list': upgrade_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-def upgrades_by_slot(request, slot):
-    clean_name = url_name(slot)
-    if slot != clean_name:
-        return HttpResponseRedirect(reverse('upgrades-by-slot', kwargs={'slot': clean_name}))
-
-    upgrade_list = Upgrade.objects.filter(slot__url_name=slot).order_by('id')
+def slot_details(request, slug):
+    slot = get_object_or_404(Slot, slug=slug)
+    upgrade_list = Upgrade.objects.filter(slot=slot).order_by('id')
     template = loader.get_template('grid.html')
     context = {
         'upgrade_list': upgrade_list,
@@ -152,11 +116,11 @@ def condition_by_id(request, id):
     return HttpResponse(template.render(context, request))
 
 def condition_by_name(request, name):
-    clean_name = url_name(name)
+    clean_name = slugify(name)
     if name != clean_name:
         return HttpResponseRedirect(reverse('condition-by-name', kwargs={'name': clean_name}))
 
-    condition_list = Condition.objects.filter(url_name=name).order_by('id')
+    condition_list = Condition.objects.filter(slug=name).order_by('id')
     template = loader.get_template('expanded_details.html')
     context = {
         'condition_list': condition_list,

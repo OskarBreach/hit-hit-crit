@@ -1,14 +1,19 @@
+import itertools
+
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 
-from .named_model import NamedModel
 from .definition import Faction, Slot
 from .ship import Ship
 from .condition import Condition
 
-class Pilot(NamedModel):
+class Pilot(models.Model):
     """Schema for pilots data file"""
 
+    name = models.CharField(max_length=255)
+    """The model's name as written on the card itself."""
     id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
     """The pilot's unique id number. It's not used in the game but it's used to link this pilot to other data in this dataset."""
     unique = models.BooleanField(default=False)
@@ -48,9 +53,24 @@ class Pilot(NamedModel):
     """The ship's range. This property is for huge ships only."""
     conditions = models.ManyToManyField(Condition, blank=True)
     """The pilot's related conditions."""
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return "{0} {1} {2} ({3})".format(self.faction, self.ship, self.name, self.xws)
+
+    def save(self, *args, **kwargs):
+        self.slug = orig = slugify(self.name)
+
+        # name not unique so might need to add -1, -2 to slug
+        for x in itertools.count(1):
+            if not Pilot.objects.filter(slug=self.slug).exists():
+                break
+            self.slug = "{0}-{1}".format(orig, x)
+
+        super(Pilot, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('pilot-details', kwargs={"slug": self.slug})
 
     class Meta:
         unique_together = ('ship', 'faction', 'xws',)

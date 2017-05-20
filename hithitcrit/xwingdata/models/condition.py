@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.template.defaultfilters import slugify
 
-from .named_model import NamedModel
-
-class Condition(NamedModel):
+class Condition(models.Model):
     """Schema for conditions data file"""
 
+    name = models.CharField(max_length=255)
+    """The model's name as written on the card itself."""
     image = models.ImageField(upload_to="condition/", blank=True)
     """The file path for this condition card's image."""
     xws = models.CharField(max_length=255, unique=True)
@@ -21,3 +22,7 @@ class Condition(NamedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Condition, self).save(*args, **kwargs)

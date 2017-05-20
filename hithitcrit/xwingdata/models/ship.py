@@ -1,12 +1,15 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 
-from .named_model import NamedModel
 from .definition import Action, Faction, Bearing, Difficulty, Size
 
-class Ship(NamedModel):
+class Ship(models.Model):
     """Fields used by all ships, regardless of size."""
 
+    name = models.CharField(max_length=255)
+    """The model's name as written on the ship itself."""
     faction = models.ManyToManyField(Faction)
     """A list of factions this ship belongs to."""
     attack = models.IntegerField(blank=True, null=True, default=0, validators=[MinValueValidator(0)])
@@ -31,6 +34,17 @@ class Ship(NamedModel):
     """The ship's energy value."""
     epic_points = models.DecimalField(blank=True, null=True, default=0, decimal_places=1, max_digits=2, validators=[MinValueValidator(0)])
     """The ship's epic points value, as described in the X-Wing Epic Play Tournament Rules."""
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Ship, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('ship-details', kwargs={"slug": self.slug})
 
     class Meta:
         unique_together = ('name',)
