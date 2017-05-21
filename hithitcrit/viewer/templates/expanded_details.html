@@ -19,13 +19,13 @@
     <div class="expandedinformation">
       <div><span class="bold">Name:</span> {{ source.name }}</div>
       <div><span class="bold">Ships:</span> {% for sourcesship in source.sourceship_set.all %}<div><a href="{{ sourcesship.ship.get_absolute_url }}">{{ sourcesship.ship.name }}</a>{% if sourcesship.quantity > 1 %} (x{{ sourcesship.quantity }}){% endif %}</div>{% endfor %}</div>
-      <div><span class="bold">Pilots:</span> {% for sourcepilot in source.sourcepilot_set.all %}<div><a href="{{ sourcepilot.get_absolute_url }}">{{ sourcepilot.pilot.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
-      <div><span class="bold">Upgrades:</span> {% for sourceupgrade in source.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.get_absolute_url }}">{{ sourceupgrade.upgrade.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
+      <div><span class="bold">Pilots:</span> {% for sourcepilot in source.sourcepilot_set.all %}<div><a href="{{ sourcepilot.pilot.get_absolute_url }}">{{ sourcepilot.pilot.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
+      <div><span class="bold">Upgrades:</span> {% for sourceupgrade in source.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.upgrade.get_absolute_url }}">{{ sourceupgrade.upgrade.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
       {% if source.reference_cards.all %}
-      <div><span class="bold">Reference cards:</span> {% for reference_card in source.reference_cards.all %}<div><a href="{% url 'reference-card-by-id' id=reference_card.id %}">{{ reference_card.title }} - {{ reference_card.subtitle}}</a></div>{% endfor %}</div>
+      <div><span class="bold">Reference cards:</span> {% for reference_card in source.reference_cards.all %}<div><a href="{{ reference_card.get_absolute_url }}">{{ reference_card.title }} - {{ reference_card.subtitle}}</a></div>{% endfor %}</div>
       {% endif %}
       {% if source.conditions.all %}
-      <div><span class="bold">Conditions:</span> {% for condition in source.conditions.all %}<div><a href="{% url 'condition-by-name' name=condition.slug %}">{{ condition.name }}</a></div>{% endfor %}</div>
+      <div><span class="bold">Conditions:</span> {% for condition in source.conditions.all %}<div><a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a></div>{% endfor %}</div>
       {% endif %}
     </div>
   </div>
@@ -43,7 +43,7 @@
       {% endif %}
     </div>
     <div class="expandedinformation">
-      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' name=pilot.slug %}">{{ pilot.name }}</a></div>
+      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' slug=pilot.slug %}">{{ pilot.name }}</a></div>
       <div><span class="bold">Unique:</span> {{ pilot.unique }}</div>
       <div><span class="bold">Ship:</span> <a href="{{ pilot.ship.get_absolute_url }}">{{ pilot.ship.name }}</a></div>
       <div><span class="bold">Faction:</span> <a href="{{ pilot.faction.get_absolute_url }}">{{ pilot.faction.name }}</a> (<a href="{{ pilot.faction.primary_faction.get_absolute_url }}">{{ pilot.faction.primary_faction.name }}</a>)</div>
@@ -66,15 +66,15 @@
       <div><span class="bold">Shields:</span> {% if pilot.shields_override %}{{ pilot.shields_override }}{% else %}{{ pilot.ship.shields }}{% endif %}</div>
       <div><span class="bold">Slots:</span> {% for slot in pilot.pilotslot_set.all %}<a href="{{ slot.slot.get_absolute_url }}">{{ slot.slot.name }}</a>{% if slot.quantity > 1 %} (x{{ slot.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       <div><span class="bold">Actions:</span> {% for action in pilot.ship.actions.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% if pilot.conditions.all %}i
-      <div><span class="bold">Conditions:</span> {% for condition in pilot.conditions.all %}<a href="{% url 'condition-by-name' name=condition.slug %}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      {% if pilot.conditions.all %}
+      <div><span class="bold">Conditions:</span> {% for condition in pilot.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
       {% if pilot.text %}
       <div><span class="bold">Text:</span> {{ pilot.text }}</div>
       {% endif %}
       <div><span class="bold">XWS:</span> {{ pilot.xws }}</div>
       <div><span class="bold">Id:</span> {{ pilot.id }}</div>
-      <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{% url 'source-by-id' id=sourcepilot.source.id %}">{{ sourcepilot.source.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
+      <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{{ sourcepilot.source.get_absolute_url }}">{{ sourcepilot.source.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
     </div>
   </div>
 {% endfor %}
@@ -91,7 +91,7 @@
       {% endif %}
     </div>
     <div class="expandedinformation">
-      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' name=upgrade.slug %}">{{ upgrade.name }}</a></div>
+      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' slug=upgrade.slug %}">{{ upgrade.name }}</a></div>
       <div><span class="bold">Unique:</span> {{ upgrade.unique }}</div>
       <div><span class="bold">Limited:</span> {{ upgrade.limited }}</div>
       {% if upgrade.faction %}
@@ -140,11 +140,11 @@
       <div><span class="bold">Grants action:</span> {% for action in upgrade.grants_action.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
       {% if upgrade.conditions.all %}
-      <div><span class="bold">Conditions:</span> {% for condition in upgrade.conditions.all %}<a href="{% url 'condition-by-name' name=condition.slug %}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      <div><span class="bold">Conditions:</span> {% for condition in upgrade.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
       <div><span class="bold">XWS:</span> {{ upgrade.xws }}</div>
       <div><span class="bold">Id:</span> {{ upgrade.id }}</div>
-      <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{% url 'source-by-id' id=sourceupgrade.source.id %}">{{ sourceupgrade.source.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
+      <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.source.get_absolute_url }}">{{ sourceupgrade.source.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
     </div>
   </div>
 {% endfor %}
@@ -161,10 +161,10 @@
       {% endif %}
     </div>
     <div class="expandedinformation">
-      <div><span class="bold">Name:</span> <a href="{% url 'condition-by-name' name=condition.slug %}">{{ condition.name }}</a></div>
+      <div><span class="bold">Name:</span> <a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a></div>
       <div><span class="bold">Unique:</span> {{ condition.unique }}</div>
       <div><span class="bold">XWS:</span> {{ condition.xws }}</div>
-      <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{% url 'source-by-id' id=source.id %}">{{ source.name }}</a></div>{% endfor %}</div>
+      <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
     </div>
   </div>
 {% endfor %}
@@ -184,7 +184,7 @@
       <div><span class="bold">Name:</span> {{ reference_card.name }}</div>
       <div><span class="bold">Unique:</span> {{ reference_card.unique }}</div>
       <div><span class="bold">XWS:</span> {{ reference_card.xws }}</div>
-      <div><span class="bold">Found in:</span> {% for source in reference_card.source_set.all %}<div><a href="{% url 'source-by-id' id=source.id %}">{{ source.name }}</a></div>{% endfor %}</div>
+      <div><span class="bold">Found in:</span> {% for source in reference_card.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
     </div>
   </div>
 {% endfor %}

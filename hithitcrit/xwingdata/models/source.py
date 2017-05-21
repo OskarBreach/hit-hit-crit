@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 from .ship import Ship
 from .pilot import Pilot
@@ -29,6 +31,7 @@ class Source(models.Model):
     """Indicates the date on which the source was announced."""
     release_date = models.DateField(blank=True, null=True)
     """Indicates the date on which the source was released."""
+    slug = models.SlugField(unique=True)
     
     """Contents"""
     ships = models.ManyToManyField(Ship, through='SourceShip')
@@ -39,6 +42,13 @@ class Source(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Source, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('source-details', kwargs={"slug": self.slug})
 
 class SourceShip(models.Model):
     source = models.ForeignKey(Source)

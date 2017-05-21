@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 class ReferenceCard(models.Model):
     """Schema for reference card data file"""
@@ -14,6 +16,17 @@ class ReferenceCard(models.Model):
     """The file path for this reference card's image."""
     text = models.CharField(max_length=255)
     """The reference card's text describing or updating new rules."""
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify("{0}-{1}".format(self.title, self.subtitle))
+        super(ReferenceCard, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('reference-card-details', kwargs={"slug": self.slug})
+
+    class Meta:
+        unique_together = ('title', 'subtitle',)
