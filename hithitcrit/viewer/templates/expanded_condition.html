@@ -7,7 +7,6 @@
     <div class="expandedinformation">
       <div><span class="bold">Name:</span> <a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a></div>
       <div><span class="bold">Unique:</span> {{ condition.unique }}</div>
-      <div><span class="bold">XWS:</span> {{ condition.xws }}</div>
       <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
     </div>
   </div>

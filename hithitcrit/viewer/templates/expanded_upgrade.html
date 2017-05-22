@@ -56,7 +56,6 @@
       {% if upgrade.conditions.all %}
       <div><span class="bold">Conditions:</span> {% for condition in upgrade.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
-      <div><span class="bold">XWS:</span> {{ upgrade.xws }}</div>
       <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.source.get_absolute_url }}">{{ sourceupgrade.source.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
     </div>
   </div>
