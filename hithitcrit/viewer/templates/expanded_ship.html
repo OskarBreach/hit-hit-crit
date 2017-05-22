@@ -1,0 +1,22 @@
+  <div class="card">
+    <div class="expandedinformation">
+      <div><span class="bold">Name:</span> <a href="{{ ship.get_absolute_url }}">{{ ship.name }}</a></div>
+      <div><span class="bold">Faction:</span> {% for faction in ship.faction.all %}<a href="{{ faction.get_absolute_url }}">{{ faction.name }}</a>(<a href="{{ faction.primary_faction.get_absolute_url }}">{{ faction.primary_faction.name }}</a>){% if not forloop.last %}, {% endif %}{% endfor %} </div>
+      <div><span class="bold">Points:</span> </div>
+      {% if ship.epic_points %}
+      <div><span class="bold">Epic points:</span> {{ ship.epic_points }}</div>
+      {% endif %}
+      {% if ship.attack %}
+      <div><span class="bold">Attack:</span> {{ ship.attack }}</div>
+      {% endif %}
+      {% if ship.energy %}
+      <div><span class="bold">Energy:</span> {{ ship.energy }}</div>
+      {% endif %}
+      <div><span class="bold">Agility:</span> {{ ship.agility }}</div>
+      <div><span class="bold">Hull:</span> {{ ship.hull }}</div>
+      <div><span class="bold">Shields:</span> {{ ship.shields }}</div>
+      <div><span class="bold">Slots:</span> </div>
+      <div><span class="bold">Actions:</span> {% for action in ship.actions.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %} </div>
+      <div><span class="bold">Found in:</span> {% for sourceship in ship.sourceship_set.all %}<div><a href="{{ sourceship.source.get_absolute_url }}">{{ sourceship.source.name }}</a>{% if sourceship.quantity > 1 %} (x{{ sourceship.quantity }}){% endif %}</div>{% endfor %}</div>
+    </div>
+  </div>
