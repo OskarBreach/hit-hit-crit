@@ -51,7 +51,6 @@ class Action(models.Model):
         return self.action
 
 class Bearing(models.Model):
-    id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     #TODO: restrictions on speed (add Template class?)
 
@@ -59,7 +58,6 @@ class Bearing(models.Model):
         return self.name
 
 class Difficulty(models.Model):
-    id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):

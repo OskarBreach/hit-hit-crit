@@ -10,8 +10,6 @@ from .ship import Ship
 from .condition import Condition
 
 class Upgrade(models.Model):
-    id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
-    """The upgrade's unique id number. It's not used in the game but it's used to link this upgrade to other data in this dataset."""
     name = models.CharField(max_length=255)
     """The model's name as written on the card itself."""
     slot = models.ForeignKey(Slot)

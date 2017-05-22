@@ -7,6 +7,14 @@
 <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 <body>
+{% if ship_list %}
+<div class="category">Ship{%if ship_list|length > 1 %}s{% endif %}</div>
+<div class="cardgrid">
+{% for ship in ship_list %}
+  {% include "expanded_ship.html" %}
+{% endfor %}
+</div>
+{% endif %}
 {% if source_list %}
 <div class="category">Source{%if source_list|length > 1 %}s{% endif %}</div>
 <div class="cardgrid">
