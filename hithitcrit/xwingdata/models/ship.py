@@ -24,8 +24,6 @@ class Ship(models.Model):
     """A list of all the actions the ship is capable of."""
     xws = models.CharField(max_length=255, unique=True)
     """The ship's unique XWS id as described in the XWS format."""
-    id = models.IntegerField(unique=True, primary_key=True)
-    """The ship's unique id number. It's not used in the game but it's used to link this ship to other data in this dataset."""
     maneuvers = models.ManyToManyField(Bearing, through='Dial')
     """The huge ship's maneuvers."""
     size = models.ForeignKey(Size)

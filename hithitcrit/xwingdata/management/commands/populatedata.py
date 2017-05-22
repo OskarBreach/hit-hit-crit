@@ -60,26 +60,26 @@ class Command(BaseCommand):
 
         Bearing = models.Bearing
         Bearing.objects.using(db_alias).bulk_create([
-            Bearing(id=0, name="Left Turn"),
-            Bearing(id=1, name="Left Bank"),
-            Bearing(id=2, name="Straight"),
-            Bearing(id=3, name="Right Bank"),
-            Bearing(id=4, name="Right Turn"),
-            Bearing(id=5, name="Koiogran Turn"),
-            Bearing(id=6, name="Segnor's Loop Left"),
-            Bearing(id=7, name="Segnor's Loop Right"),
-            Bearing(id=8, name="Tallon Roll Left"),
-            Bearing(id=9, name="Tallon Roll Right"),
-            Bearing(id=10, name="Backwards Left Bank"),
-            Bearing(id=11, name="Backwards Straight"),
-            Bearing(id=12, name="Backwards Right Bank"),
+            Bearing(pk=0, name="Left Turn"),
+            Bearing(pk=1, name="Left Bank"),
+            Bearing(pk=2, name="Straight"),
+            Bearing(pk=3, name="Right Bank"),
+            Bearing(pk=4, name="Right Turn"),
+            Bearing(pk=5, name="Koiogran Turn"),
+            Bearing(pk=6, name="Segnor's Loop Left"),
+            Bearing(pk=7, name="Segnor's Loop Right"),
+            Bearing(pk=8, name="Tallon Roll Left"),
+            Bearing(pk=9, name="Tallon Roll Right"),
+            Bearing(pk=10, name="Backwards Left Bank"),
+            Bearing(pk=11, name="Backwards Straight"),
+            Bearing(pk=12, name="Backwards Right Bank"),
             ])
 
         Difficulty = models.Difficulty
         Difficulty.objects.using(db_alias).bulk_create([
-            Difficulty(id=1, name="White"),
-            Difficulty(id=2, name="Green"),
-            Difficulty(id=3, name="Red"),
+            Difficulty(pk=1, name="White"),
+            Difficulty(pk=2, name="Green"),
+            Difficulty(pk=3, name="Red"),
             ])
 
         Slot = models.Slot
@@ -192,7 +192,7 @@ class Command(BaseCommand):
         ships_data = json.loads(open(ships_data_file).read())
 
         for ship in ships_data:
-            new_ship = Ship.objects.update_or_create(id=ship['id'],
+            new_ship = Ship.objects.update_or_create(pk=ship['id'],
                     defaults={'name': ship['name'],
                         'attack': int(ship['attack']) if 'attack' in ship else None, 
                         'agility': int(ship['agility']),
@@ -216,8 +216,8 @@ class Command(BaseCommand):
                         maneuvers_energy = ship['maneuvers_energy'][speed][bearing] if 'maneuvers_energy' in ship else None
                         Dial.objects.create(ship=new_ship[0], 
                                 speed=speed, 
-                                bearing=Bearing.objects.get(id=bearing), 
-                                difficulty=Difficulty.objects.get(id=difficulty),
+                                bearing=Bearing.objects.get(pk=bearing), 
+                                difficulty=Difficulty.objects.get(pk=difficulty),
                                 maneuvers_energy=maneuvers_energy) 
 
     def rollback_ships(self):
@@ -239,7 +239,7 @@ class Command(BaseCommand):
                 os.makedirs(os.path.dirname(condition_image_to), exist_ok=True)
                 copy(condition_image_from, condition_image_to)
 
-            Condition.objects.update_or_create(id=condition['id'], 
+            Condition.objects.update_or_create(pk=condition['id'], 
                     defaults={'image': condition['image'] if 'image' in condition else "",
                         'name': condition['name'],
                         'xws': condition['xws'],
@@ -270,7 +270,7 @@ class Command(BaseCommand):
                 os.makedirs(os.path.dirname(pilot_image_to), exist_ok=True)
                 copy(pilot_image_from, pilot_image_to)
 
-            new_pilot = Pilot.objects.update_or_create(id=pilot['id'],
+            new_pilot = Pilot.objects.update_or_create(pk=pilot['id'],
                     defaults={'name': pilot['name'],
                         'unique': bool(pilot['unique']) if 'unique' in pilot else False,
                         'ship': Ship.objects.get(name=pilot['ship']),
@@ -334,7 +334,7 @@ class Command(BaseCommand):
                         else:
                             grants_stat[stat] = value
 
-            new_upgrade = Upgrade.objects.update_or_create(id=upgrade['id'],
+            new_upgrade = Upgrade.objects.update_or_create(pk=upgrade['id'],
                     defaults={'name': upgrade['name'],
                         'slot': Slot.objects.get(name=upgrade['slot']),
                         'slot_cost': 1,
@@ -414,7 +414,7 @@ class Command(BaseCommand):
                 os.makedirs(os.path.dirname(thumb_dest), exist_ok=True)
                 copy(thumb_src, thumb_dest)
 
-            new_source = Source.objects.update_or_create(id=source['id'],
+            new_source = Source.objects.update_or_create(pk=source['id'],
                 defaults={  'name': source['name'],
                             'image': source['image'] if 'image' in source else "",
                             'thumb': source['thumb'] if 'thumb' in source else "",
@@ -428,20 +428,20 @@ class Command(BaseCommand):
             new_source[0].ships.clear()
             if 'ships' in contents:
                 for ship in contents['ships']:
-                    SourceShip.objects.create(source=new_source[0], ship=Ship.objects.get(id=ship), quantity=contents['ships'][ship])
+                    SourceShip.objects.create(source=new_source[0], ship=Ship.objects.get(pk=ship), quantity=contents['ships'][ship])
             new_source[0].pilots.clear()
             if 'pilots' in contents:
                 for pilot in contents['pilots']:
-                    SourcePilot.objects.create(source=new_source[0], pilot=Pilot.objects.get(id=pilot), quantity=contents['pilots'][pilot])
+                    SourcePilot.objects.create(source=new_source[0], pilot=Pilot.objects.get(pk=pilot), quantity=contents['pilots'][pilot])
             new_source[0].upgrades.clear()
             if 'upgrades' in contents:
                 for upgrade in contents['upgrades']:
-                    SourceUpgrade.objects.create(source=new_source[0], upgrade=Upgrade.objects.get(id=upgrade), quantity=contents['upgrades'][upgrade])
+                    SourceUpgrade.objects.create(source=new_source[0], upgrade=Upgrade.objects.get(pk=upgrade), quantity=contents['upgrades'][upgrade])
             #TODO: Quantity for conditions not supported upstream yet
             new_source[0].conditions.clear()
             if 'conditions' in contents:
                 for condition in contents['conditions']:
-                   SourceCondition.objects.create(source=new_source[0], condition=Condition.objects.get(id=condition), quantity=1)
+                   SourceCondition.objects.create(source=new_source[0], condition=Condition.objects.get(pk=condition), quantity=1)
 
     def rollback_sources(self):
         pass

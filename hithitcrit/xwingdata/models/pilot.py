@@ -14,8 +14,6 @@ class Pilot(models.Model):
 
     name = models.CharField(max_length=255)
     """The model's name as written on the card itself."""
-    id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
-    """The pilot's unique id number. It's not used in the game but it's used to link this pilot to other data in this dataset."""
     unique = models.BooleanField(default=False)
     """Indicates whether this pilot has a unique name or not.
     Some pilot cards have unique names, which are identified by the bullet to the left of the name.

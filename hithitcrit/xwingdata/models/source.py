@@ -11,8 +11,6 @@ from .condition import Condition
 class Source(models.Model):
     name = models.CharField(max_length=255, unique=True)
     """The source's name as written on the package."""
-    id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
-    """The source's unique id number. It's not used in the game but it's used to link this source to other data in this dataset."""
     image = models.ImageField(upload_to="sources/", blank=True)
     """The file path for this pilot card's image."""
     thumb = models.ImageField(upload_to="sources/", blank=True)

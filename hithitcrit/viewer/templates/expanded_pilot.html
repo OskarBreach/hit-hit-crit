@@ -35,7 +35,6 @@
       <div><span class="bold">Text:</span> {{ pilot.text }}</div>
       {% endif %}
       <div><span class="bold">XWS:</span> {{ pilot.xws }}</div>
-      <div><span class="bold">Id:</span> {{ pilot.id }}</div>
       <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{{ sourcepilot.source.get_absolute_url }}">{{ sourcepilot.source.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
     </div>
   </div>
