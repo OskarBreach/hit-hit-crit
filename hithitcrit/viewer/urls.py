@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^(?i)name/(?P<slug>[\w-]+)/$', views.objects_by_name, name='objects-by-name'),
-    url(r'^(?i)pilots/$', views.pilots, name='pilots'),
-    url(r'^(?i)upgrades/$', views.upgrades, name='upgrades'),
+    url(r'^(?i)pilots/$', views.pilot_grid, name='pilot-grid'),
+    url(r'^(?i)upgrades/$', views.upgrade_grid, name='upgrade-grid'),
     url(r'^(?i)pilots/(?P<slug>[\w-]+)/$', views.pilot_details, name='pilot-details'),
     url(r'^(?i)upgrades/(?P<slug>[\w-]+)/$', views.upgrade_details, name='upgrade-details'),
     url(r'^(?i)ship/(?P<slug>[\w-]+)/$', views.ship_details, name='ship-details'),

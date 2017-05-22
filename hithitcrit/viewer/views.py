@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from xwingdata.models import Pilot, Upgrade, Ship, Faction, PrimaryFaction, Slot, Condition, Source
 
@@ -27,19 +28,39 @@ def objects_by_name(request, slug):
     }
     return HttpResponse(template.render(context, request))
 
-def pilots(request):
+def pilot_grid(request):
     pilot_list = Pilot.objects.order_by('id')
+    paginator = Paginator(pilot_list, 20)
+
+    page = request.GET.get('page')
+    try:
+        pilots = paginator.page(page)
+    except PageNotAnInteger:
+        pilots = paginator.page(1)
+    except EmptyPage:
+        pilots = paginator.page(paginator.num_pages)
+
     template = loader.get_template('grid.html')
     context = {
-        'pilot_list': pilot_list,
+        'pilot_list': pilots,
     }
     return HttpResponse(template.render(context, request))
 
-def upgrades(request):
+def upgrade_grid(request):
     upgrade_list = Upgrade.objects.order_by('id')
+    paginator = Paginator(upgrade_list, 24)
+
+    page = request.GET.get('page')
+    try:
+        upgrades = paginator.page(page)
+    except PageNotAnInteger:
+        upgrades = paginator.page(1)
+    except EmptyPage:
+        upgrades = paginator.page(paginator.num_pages)
+
     template = loader.get_template('grid.html')
     context = {
-        'upgrade_list': upgrade_list,
+        'upgrade_list': upgrades,
     }
     return HttpResponse(template.render(context, request))
 
