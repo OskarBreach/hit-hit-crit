@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hit Hit Crit</title>
+        <link rel="stylesheet" type="text/css" href="{% static "home/home.css" %}">
+        <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    </head>
+    <body>
+        <div>
+            <ul class="nav_bar">
+                <li><a href="/home/">LOGO</a></li>
+                <li><a href="/squad_builder/">New Squad</a></li>
+                <li><a href="/squad_builder/">Your Squads</a></li>
+                <li><a href="/viewer/pilots/">Cards</a></li>
+                <li><a href="/viewer/pilots/">Ships</a></li>
+                <li><a href="/viewer/pilots/">Sets</a></li>
+                <li><a href="/viewer/pilots/">Log In</a></li>
+                <li style="float:right"><a href="/viewer/pilots/">Search</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            {% block content %}
+            Invalid Page...
+            {% endblock %}
+        </div>
+
+        <div class="footer">
+            X-Wing: The Miniatures Game is a trademark of Fantasy Flight Games, with whom this site is not endorsed. See <a href="/about/">about</a> for more.
+        </div>
+    </body>
+</html>
