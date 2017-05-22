@@ -3,7 +3,7 @@ from django.template import loader
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 
-from xwingdata.models import Pilot, Upgrade, Ship, Faction, PrimaryFaction, Slot, ReferenceCard, Condition, Source
+from xwingdata.models import Pilot, Upgrade, Ship, Faction, PrimaryFaction, Slot, Condition, Source
 
 def index(request):
     template = loader.get_template('index.html')
@@ -92,14 +92,6 @@ def slot_details(request, slug):
     template = loader.get_template('grid.html')
     context = {
         'upgrade_list': upgrade_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-def reference_card_details(request, slug):
-    reference_card = get_object_or_404(ReferenceCard, slug=slug)
-    template = loader.get_template('expanded_details.html')
-    context = {
-        'reference_card_list': (reference_card,),
     }
     return HttpResponse(template.render(context, request))
 

@@ -384,31 +384,6 @@ class Command(BaseCommand):
     def rollback_upgrades(self):
         pass
 
-    def load_reference_cards(self):
-        schema_editor = connection.schema_editor()
-        db_alias = schema_editor.connection.alias
-        ReferenceCard = models.ReferenceCard
-
-        reference_cards_data_file = os.path.join(XWING_DATA_DIR, 'data/reference-cards.js')
-        reference_cards_data = json.loads(open(reference_cards_data_file).read())
-
-        for reference_card in reference_cards_data:
-            # Copy the pilot images to MEDIA_ROOT directory
-            if ('image' in reference_card):
-                reference_card_image_from = os.path.join(XWING_DATA_DIR, 'images/', reference_card['image'])
-                reference_card_image_to = os.path.join(MEDIA_ROOT, reference_card['image'])
-                os.makedirs(os.path.dirname(reference_card_image_to), exist_ok=True)
-                copy(reference_card_image_from, reference_card_image_to)
-
-            ReferenceCard.objects.update_or_create(id=reference_card['id'],
-                    defaults={'title': reference_card['title'],
-                        'subtitle': reference_card['subtitle'],
-                        'image': reference_card['image'] if 'image' in reference_card else "",
-                        'text': reference_card['text'] if 'text' in reference_card else "",})
-
-    def rollback_reference_cards(self):
-        pass
-
     def load_sources(self):
         schema_editor = connection.schema_editor()
         db_alias = schema_editor.connection.alias
@@ -416,11 +391,11 @@ class Command(BaseCommand):
         Ship = models.Ship
         Pilot = models.Pilot
         Upgrade = models.Upgrade
-        ReferenceCard = models.ReferenceCard
         Condition = models.Condition
         SourceShip = models.SourceShip
         SourcePilot = models.SourcePilot
         SourceUpgrade = models.SourceUpgrade
+        SourceCondition = models.SourceCondition
 
         sources_data_file = os.path.join(XWING_DATA_DIR, 'data/sources.js')
         sources_data = json.loads(open(sources_data_file).read())
@@ -462,14 +437,11 @@ class Command(BaseCommand):
             if 'upgrades' in contents:
                 for upgrade in contents['upgrades']:
                     SourceUpgrade.objects.create(source=new_source[0], upgrade=Upgrade.objects.get(id=upgrade), quantity=contents['upgrades'][upgrade])
-            new_source[0].reference_cards.clear()
-            if 'reference-cards' in contents:
-                for reference_card in contents['reference-cards']:
-                    new_source[0].reference_cards.add(ReferenceCard.objects.get(id=reference_card))
+            #TODO: Quantity for conditions not supported upstream yet
             new_source[0].conditions.clear()
             if 'conditions' in contents:
                 for condition in contents['conditions']:
-                    new_source[0].conditions.add(Condition.objects.get(id=condition))
+                   SourceCondition.objects.create(source=new_source[0], condition=Condition.objects.get(id=condition), quantity=1)
 
     def rollback_sources(self):
         pass
@@ -481,7 +453,6 @@ class Command(BaseCommand):
         self.rollback_conditions()
         self.rollback_pilots()
         self.rollback_upgrades()
-        self.rollback_reference_cards()
         self.rollback_sources()
         
         # Load the data
@@ -490,6 +461,5 @@ class Command(BaseCommand):
         self.load_conditions()
         self.load_pilots()
         self.load_upgrades()
-        self.load_reference_cards() 
         self.load_sources()
 

@@ -10,25 +10,7 @@
 <div class="category">Source{%if source_list|length > 1 %}s{% endif %}</div>
 <div class="cardgrid">
 {% for source in source_list %}
-  <div class="card">
-    <div class="cardimage">
-      {% if source.image %}
-      <img src="{{ source.image.url }}"/>
-      {% endif %}
-    </div>
-    <div class="expandedinformation">
-      <div><span class="bold">Name:</span> {{ source.name }}</div>
-      <div><span class="bold">Ships:</span> {% for sourcesship in source.sourceship_set.all %}<div><a href="{{ sourcesship.ship.get_absolute_url }}">{{ sourcesship.ship.name }}</a>{% if sourcesship.quantity > 1 %} (x{{ sourcesship.quantity }}){% endif %}</div>{% endfor %}</div>
-      <div><span class="bold">Pilots:</span> {% for sourcepilot in source.sourcepilot_set.all %}<div><a href="{{ sourcepilot.pilot.get_absolute_url }}">{{ sourcepilot.pilot.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
-      <div><span class="bold">Upgrades:</span> {% for sourceupgrade in source.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.upgrade.get_absolute_url }}">{{ sourceupgrade.upgrade.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
-      {% if source.reference_cards.all %}
-      <div><span class="bold">Reference cards:</span> {% for reference_card in source.reference_cards.all %}<div><a href="{{ reference_card.get_absolute_url }}">{{ reference_card.title }} - {{ reference_card.subtitle}}</a></div>{% endfor %}</div>
-      {% endif %}
-      {% if source.conditions.all %}
-      <div><span class="bold">Conditions:</span> {% for condition in source.conditions.all %}<div><a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a></div>{% endfor %}</div>
-      {% endif %}
-    </div>
-  </div>
+  {% include "expanded_source.html" %}
 {% endfor %}
 </div>
 {% endif %}
@@ -36,47 +18,7 @@
 <div class="bold">Pilot{%if pilot_list|length > 1 %}s{% endif %}</div>
 <div class="cardgrid">
 {% for pilot in pilot_list %}
-  <div class="card">
-    <div class="cardimage">
-      {% if pilot.image %}
-      <img src="{{ pilot.image.url }}"/>
-      {% endif %}
-    </div>
-    <div class="expandedinformation">
-      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' slug=pilot.slug %}">{{ pilot.name }}</a></div>
-      <div><span class="bold">Unique:</span> {{ pilot.unique }}</div>
-      <div><span class="bold">Ship:</span> <a href="{{ pilot.ship.get_absolute_url }}">{{ pilot.ship.name }}</a></div>
-      <div><span class="bold">Faction:</span> <a href="{{ pilot.faction.get_absolute_url }}">{{ pilot.faction.name }}</a> (<a href="{{ pilot.faction.primary_faction.get_absolute_url }}">{{ pilot.faction.primary_faction.name }}</a>)</div>
-      <div><span class="bold">Skill:</span> {% if pilot.skill_special_ruling %}*{% else %}{{ pilot.skill }}{% endif %}</div>
-      <div><span class="bold">Points:</span> {% if pilot.points_special_ruling %}-{% else %}{{ pilot.points }}{% endif %}</div>
-      {% if pilot.ship.epic_points %}
-      <div><span class="bold">Epic points:</span> {{ pilot.ship.epic_points }}</div>
-      {% endif %}
-      {% if pilot.ship.attack or pilot.attack_override %}
-      <div><span class="bold">Attack:</span> {% if pilot.attack_override %}{{ pilot.attack_override }}{% else %}{{ pilot.ship.attack }}{% endif %}</div>
-      {% endif %}
-      {% if pilot.range != "" %}
-      <div><span class="bold">Range:</span> {{ pilot.range }}</div>
-      {% endif %}
-      {% if pilot.ship.energy %}
-      <div><span class="bold">Energy:</span> {{ pilot.ship.energy }}</div>
-      {% endif %}
-      <div><span class="bold">Agility:</span> {% if pilot.agility_override %}{{ pilot.agility_override }}{% else %}{{ pilot.ship.agility }}{% endif %}</div>
-      <div><span class="bold">Hull:</span> {% if pilot.hull_override %}{{ pilot.hull_override }}{% else %}{{ pilot.ship.hull }}{% endif %}</div>
-      <div><span class="bold">Shields:</span> {% if pilot.shields_override %}{{ pilot.shields_override }}{% else %}{{ pilot.ship.shields }}{% endif %}</div>
-      <div><span class="bold">Slots:</span> {% for slot in pilot.pilotslot_set.all %}<a href="{{ slot.slot.get_absolute_url }}">{{ slot.slot.name }}</a>{% if slot.quantity > 1 %} (x{{ slot.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      <div><span class="bold">Actions:</span> {% for action in pilot.ship.actions.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% if pilot.conditions.all %}
-      <div><span class="bold">Conditions:</span> {% for condition in pilot.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% endif %}
-      {% if pilot.text %}
-      <div><span class="bold">Text:</span> {{ pilot.text }}</div>
-      {% endif %}
-      <div><span class="bold">XWS:</span> {{ pilot.xws }}</div>
-      <div><span class="bold">Id:</span> {{ pilot.id }}</div>
-      <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{{ sourcepilot.source.get_absolute_url }}">{{ sourcepilot.source.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
-    </div>
-  </div>
+  {% include "expanded_pilot.html" %}
 {% endfor %}
 </div>
 {% endif %}
@@ -84,69 +26,7 @@
 <div class="category">Upgrade{%if upgrade_list|length > 1 %}s{% endif %}</div>
 <div class="cardgrid">
 {% for upgrade in upgrade_list %}
-  <div class="card">
-    <div class="cardimage">
-      {% if upgrade.image %}
-      <img src="{{ upgrade.image.url }}"/>
-      {% endif %}
-    </div>
-    <div class="expandedinformation">
-      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' slug=upgrade.slug %}">{{ upgrade.name }}</a></div>
-      <div><span class="bold">Unique:</span> {{ upgrade.unique }}</div>
-      <div><span class="bold">Limited:</span> {{ upgrade.limited }}</div>
-      {% if upgrade.faction %}
-      <div><span class="bold">Faction:</span> {{ upgrade.faction }}</div>
-      {% endif %}
-      {% if upgrade.ship.all %}
-      <div><span class="bold">Ship:</span> {% for ship in upgrade.ship.all %}<a href="{{ ship.get_absolute_url }}">{{ ship.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% endif %}
-      {% if upgrade.size.all %}
-      <div><span class="bold">Size:</span> {% for size in upgrade.size.all %}{{ size.size }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% endif %}
-      <div><span class="bold">Slot:</span> <a href="{{ upgrade.slot.get_absolute_url }}">{{ upgrade.slot.name }}</a>{% if upgrade.slot_cost > 1 %} (x{{ upgrade.slot_cost }}){% endif %}</div>
-      <div><span class="bold">Points:</span> {{ upgrade.points }}</div>
-      {% if upgrade.energy %}
-      <div><span class="bold">Energy cost:</span> {{ upgrade.energy }}</div>
-      {% endif %}
-      {% if upgrade.attack %}
-      <div><span class="bold">Attack:</span> {{ upgrade.attack }}</div>
-      {% endif %}
-      {% if upgrade.range != "" %}
-      <div><span class="bold">Range:</span> {{ upgrade.range }}</div>
-      {% endif %}
-      <div><span class="bold">Text:</span> {{ upgrade.text }}</div>
-      {% if upgrade.effect != "" %}
-      <div><span class="bold">Effect:</span> {{ upgrade.effect }}</div>
-      {% endif %}
-      {% if upgrade.grants_attack %}
-      <div><span class="bold">Grants attack:</span> {% if upgrade.grants_attack > 0 %}+{% endif %}{{ upgrade.grants_attack }}</div>
-      {% endif %}
-      {% if upgrade.grants_agility %}
-      <div><span class="bold">Grants agility:</span> {% if upgrade.grants_agility > 0 %}+{% endif %}{{ upgrade.grants_agility }}</div>
-      {% endif %}
-      {% if upgrade.grants_hull %}
-      <div><span class="bold">Grants hull:</span> {% if upgrade.grants_hull > 0 %}+{% endif %}{{ upgrade.grants_hull }}</div>
-      {% endif %}
-      {% if upgrade.grants_shields %}
-      <div><span class="bold">Grants shields:</span> {% if upgrade.grants_shields > 0 %}+{% endif %}{{ upgrade.grants_shields }}</div>
-      {% endif %}
-      {% if upgrade.grants_skill %}
-      <div><span class="bold">Grants skill:</span> {% if upgrade.grants_skill > 0 %}+{% endif %}{{ upgrade.grants_skill }}</div>
-      {% endif %}
-      {% if upgrade.grantsslot_set.all %}
-      <div><span class="bold">Grants slot:</span> {% for grant in upgrade.grantsslot_set.all %}<a href="{{ grant.slot.get_absolute_url }}">{{ grant.slot.name }}</a>{% if grant.quantity > 1 %} (x{{ grant.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% endif %}
-      {% if upgrade.grants_action.all %}
-      <div><span class="bold">Grants action:</span> {% for action in upgrade.grants_action.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% endif %}
-      {% if upgrade.conditions.all %}
-      <div><span class="bold">Conditions:</span> {% for condition in upgrade.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-      {% endif %}
-      <div><span class="bold">XWS:</span> {{ upgrade.xws }}</div>
-      <div><span class="bold">Id:</span> {{ upgrade.id }}</div>
-      <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.source.get_absolute_url }}">{{ sourceupgrade.source.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
-    </div>
-  </div>
+  {% include "expanded_upgrade.html" %}
 {% endfor %}
 </div>
 {% endif %}
@@ -154,39 +34,7 @@
 <div class="category">Condition{%if condition_list|length > 1 %}s{% endif %}</div>
 <div class="cardgrid">
 {% for condition in condition_list %}
-  <div class="card">
-    <div class="cardimage">
-      {% if condition.image %}
-      <img src="{{ condition.image.url }}"/>
-      {% endif %}
-    </div>
-    <div class="expandedinformation">
-      <div><span class="bold">Name:</span> <a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a></div>
-      <div><span class="bold">Unique:</span> {{ condition.unique }}</div>
-      <div><span class="bold">XWS:</span> {{ condition.xws }}</div>
-      <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
-    </div>
-  </div>
-{% endfor %}
-</div>
-{% endif %}
-{% if reference_card_list %}
-<div class="category">Reference card{%if reference_card_list|length > 1 %}s{% endif %}</div>
-<div class="cardgrid">
-{% for reference_card in reference_card_list %}
-  <div class="card">
-    <div class="cardimage">
-      {% if reference_card.image %}
-      <img src="{{ reference_card.image.url }}"/>
-      {% endif %}
-    </div>
-    <div class="expandedinformation">
-      <div><span class="bold">Name:</span> {{ reference_card.name }}</div>
-      <div><span class="bold">Unique:</span> {{ reference_card.unique }}</div>
-      <div><span class="bold">XWS:</span> {{ reference_card.xws }}</div>
-      <div><span class="bold">Found in:</span> {% for source in reference_card.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
-    </div>
-  </div>
+  {% include "expanded_condition.html" %}
 {% endfor %}
 </div>
 {% endif %}
