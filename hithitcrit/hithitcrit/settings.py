@@ -39,7 +39,7 @@ DEFAULT_APPS = [
 THIRD_PARTY_APPS = []
 
 LOCAL_APPS = [
-    'main',
+    'home',
     'xwingdata',
     'viewer',
     'squad_builder',
