@@ -6,7 +6,6 @@ from django.urls import reverse
 from .ship import Ship
 from .pilot import Pilot
 from .upgrade import Upgrade
-from .reference_card import ReferenceCard
 from .condition import Condition
 
 class Source(models.Model):
@@ -37,8 +36,7 @@ class Source(models.Model):
     ships = models.ManyToManyField(Ship, through='SourceShip')
     pilots = models.ManyToManyField(Pilot, through='SourcePilot')
     upgrades = models.ManyToManyField(Upgrade, through='SourceUpgrade')
-    reference_cards = models.ManyToManyField(ReferenceCard, blank=True)
-    conditions = models.ManyToManyField(Condition, blank=True)
+    conditions = models.ManyToManyField(Condition, through='SourceCondition')
 
     def __str__(self):
         return self.name
@@ -91,3 +89,17 @@ class SourceUpgrade(models.Model):
 
     class Meta:
         unique_together = ('source', 'upgrade')
+
+class SourceCondition(models.Model):
+    source = models.ForeignKey(Source)
+    condition = models.ForeignKey(Condition)
+    quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+
+    def __str__(self):
+        if self.quantity > 1:
+            return "{0}: {1} (x{2})".format(self.source, self.condition, self.quantity)
+        else:
+            return "{0}: {1}".format(self.source, self.condition)
+
+    class Meta:
+        unique_together = ('source', 'condition')

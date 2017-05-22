@@ -1,0 +1,63 @@
+  <div class="card">
+    <div class="cardimage">
+      {% if upgrade.image %}
+      <img src="{{ upgrade.image.url }}"/>
+      {% endif %}
+    </div>
+    <div class="expandedinformation">
+      <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' slug=upgrade.slug %}">{{ upgrade.name }}</a></div>
+      <div><span class="bold">Unique:</span> {{ upgrade.unique }}</div>
+      <div><span class="bold">Limited:</span> {{ upgrade.limited }}</div>
+      {% if upgrade.faction %}
+      <div><span class="bold">Faction:</span> {{ upgrade.faction }}</div>
+      {% endif %}
+      {% if upgrade.ship.all %}
+      <div><span class="bold">Ship:</span> {% for ship in upgrade.ship.all %}<a href="{{ ship.get_absolute_url }}">{{ ship.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      {% endif %}
+      {% if upgrade.size.all %}
+      <div><span class="bold">Size:</span> {% for size in upgrade.size.all %}{{ size.size }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      {% endif %}
+      <div><span class="bold">Slot:</span> <a href="{{ upgrade.slot.get_absolute_url }}">{{ upgrade.slot.name }}</a>{% if upgrade.slot_cost > 1 %} (x{{ upgrade.slot_cost }}){% endif %}</div>
+      <div><span class="bold">Points:</span> {{ upgrade.points }}</div>
+      {% if upgrade.energy %}
+      <div><span class="bold">Energy cost:</span> {{ upgrade.energy }}</div>
+      {% endif %}
+      {% if upgrade.attack %}
+      <div><span class="bold">Attack:</span> {{ upgrade.attack }}</div>
+      {% endif %}
+      {% if upgrade.range != "" %}
+      <div><span class="bold">Range:</span> {{ upgrade.range }}</div>
+      {% endif %}
+      <div><span class="bold">Text:</span> {{ upgrade.text }}</div>
+      {% if upgrade.effect != "" %}
+      <div><span class="bold">Effect:</span> {{ upgrade.effect }}</div>
+      {% endif %}
+      {% if upgrade.grants_attack %}
+      <div><span class="bold">Grants attack:</span> {% if upgrade.grants_attack > 0 %}+{% endif %}{{ upgrade.grants_attack }}</div>
+      {% endif %}
+      {% if upgrade.grants_agility %}
+      <div><span class="bold">Grants agility:</span> {% if upgrade.grants_agility > 0 %}+{% endif %}{{ upgrade.grants_agility }}</div>
+      {% endif %}
+      {% if upgrade.grants_hull %}
+      <div><span class="bold">Grants hull:</span> {% if upgrade.grants_hull > 0 %}+{% endif %}{{ upgrade.grants_hull }}</div>
+      {% endif %}
+      {% if upgrade.grants_shields %}
+      <div><span class="bold">Grants shields:</span> {% if upgrade.grants_shields > 0 %}+{% endif %}{{ upgrade.grants_shields }}</div>
+      {% endif %}
+      {% if upgrade.grants_skill %}
+      <div><span class="bold">Grants skill:</span> {% if upgrade.grants_skill > 0 %}+{% endif %}{{ upgrade.grants_skill }}</div>
+      {% endif %}
+      {% if upgrade.grantsslot_set.all %}
+      <div><span class="bold">Grants slot:</span> {% for grant in upgrade.grantsslot_set.all %}<a href="{{ grant.slot.get_absolute_url }}">{{ grant.slot.name }}</a>{% if grant.quantity > 1 %} (x{{ grant.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      {% endif %}
+      {% if upgrade.grants_action.all %}
+      <div><span class="bold">Grants action:</span> {% for action in upgrade.grants_action.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      {% endif %}
+      {% if upgrade.conditions.all %}
+      <div><span class="bold">Conditions:</span> {% for condition in upgrade.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      {% endif %}
+      <div><span class="bold">XWS:</span> {{ upgrade.xws }}</div>
+      <div><span class="bold">Id:</span> {{ upgrade.id }}</div>
+      <div><span class="bold">Found in:</span> {% for sourceupgrade in upgrade.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.source.get_absolute_url }}">{{ sourceupgrade.source.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
+    </div>
+  </div>
