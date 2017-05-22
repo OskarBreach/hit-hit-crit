@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = []
 LOCAL_APPS = [
     'xwingdata',
     'viewer',
+    'squad_builder',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
