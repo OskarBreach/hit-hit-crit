@@ -1,3 +1,6 @@
+{% extends "base_template.html" %}
+
+{% block content %}
 <div class="category">{% block grid_type %}Item{%if object_list|length > 1 %}s{% endif %}{% endblock %}</div>
 <div class="object-grid">
 {% for object in object_list %}
@@ -26,3 +29,4 @@
 </div>
 {% endblock %}
 </div>
+{% endblock %}
