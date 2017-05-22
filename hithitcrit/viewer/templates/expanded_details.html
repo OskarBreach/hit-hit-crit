@@ -134,7 +134,7 @@
       <div><span class="bold">Grants skill:</span> {% if upgrade.grants_skill > 0 %}+{% endif %}{{ upgrade.grants_skill }}</div>
       {% endif %}
       {% if upgrade.grantsslot_set.all %}
-      <div><span class="bold">Grants slot:</span> {% for grant in upgrade.grantsslot_set.all %}<a href="{% url 'upgrades-by-slot' slot=grant.slot.slug %}">{{ grant.slot.name }}</a>{% if grant.quantity > 1 %} (x{{ grant.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+      <div><span class="bold">Grants slot:</span> {% for grant in upgrade.grantsslot_set.all %}<a href="{{ grant.slot.get_absolute_url }}">{{ grant.slot.name }}</a>{% if grant.quantity > 1 %} (x{{ grant.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
       {% endif %}
       {% if upgrade.grants_action.all %}
       <div><span class="bold">Grants action:</span> {% for action in upgrade.grants_action.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>

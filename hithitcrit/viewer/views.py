@@ -12,22 +12,18 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def objects_by_name(request, slug):
-    source_list = Source.objects.filter(slug=slug).order_by('id')
-    pilot_list = Pilot.objects.filter(slug=slug).order_by('id')
-    upgrade_list = Upgrade.objects.filter(slug=slug).order_by('id')
-    condition_list = Condition.objects.filter(slug=slug).order_by('id')
-    reference_card_list = ReferenceCard.objects.filter(slug=slug).order_by('id')
+    pilot_list = Pilot.objects.filter(name_slug=slug).order_by('id')
+    upgrade_list = Upgrade.objects.filter(name_slug=slug).order_by('id')
+    condition_list = Condition.objects.filter(name_slug=slug).order_by('id')
 
-    if not (source_list or pilot_list or upgrade_list or condition_list):
+    if not (pilot_list or upgrade_list or condition_list):
         raise Http404
 
     template = loader.get_template('expanded_details.html')
     context = {
-        'source_list': source_list,
         'pilot_list': pilot_list,
         'upgrade_list': upgrade_list,
         'condition_list': condition_list,
-        'reference_card_list': condition_list,
     }
     return HttpResponse(template.render(context, request))
 

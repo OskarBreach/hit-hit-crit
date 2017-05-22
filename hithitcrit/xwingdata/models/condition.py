@@ -21,12 +21,14 @@ class Condition(models.Model):
     id = models.IntegerField(unique=True, primary_key=True, validators=[MinValueValidator(0)])
     """The condition's unique id number. It's not used in the game but it's used to link this condition to other data in this dataset."""
     slug = models.SlugField(unique=True)
+    # Condition names are unique currently, but might not be in future like Pilots and Upgrades
+    name_slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = self.name_slug = slugify(self.name)
         super(Condition, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
