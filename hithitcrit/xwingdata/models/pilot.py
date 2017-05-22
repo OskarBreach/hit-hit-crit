@@ -54,18 +54,19 @@ class Pilot(models.Model):
     conditions = models.ManyToManyField(Condition, blank=True)
     """The pilot's related conditions."""
     slug = models.SlugField(unique=True)
+    name_slug = models.SlugField()
 
     def __str__(self):
         return "{0} {1} {2} ({3})".format(self.faction, self.ship, self.name, self.xws)
 
     def save(self, *args, **kwargs):
-        self.slug = orig = slugify(self.name)
+        self.slug = self.name_slug = slugify(self.name)
 
         # name not unique so might need to add -1, -2 to slug
         for x in itertools.count(1):
             if not Pilot.objects.filter(slug=self.slug).exists():
                 break
-            self.slug = "{0}-{1}".format(orig, x)
+            self.slug = "{0}-{1}".format(self.name_slug, x)
 
         super(Pilot, self).save(*args, **kwargs)
 
