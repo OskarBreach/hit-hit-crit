@@ -1,0 +1,30 @@
+{% extends "base_template.html" %}
+{% load static %}
+
+{% block title %}
+<title>{{ source.name }}</title>
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static "viewer/expanded_details.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "viewer/grid.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="cardimage">
+    {% if source.image %}
+    <img src="{{ source.image.url }}"/>
+    {% endif %}
+  </div>
+  <div class="expandedinformation">
+    <div><span class="bold">Name:</span> {{ source.name }}</div>
+    <div><span class="bold">Ships:</span> {% for sourcesship in source.sourceship_set.all %}<div><a href="{{ sourcesship.ship.get_absolute_url }}">{{ sourcesship.ship.name }}</a>{% if sourcesship.quantity > 1 %} (x{{ sourcesship.quantity }}){% endif %}</div>{% endfor %}</div>
+    <div><span class="bold">Pilots:</span> {% for sourcepilot in source.sourcepilot_set.all %}<div><a href="{{ sourcepilot.pilot.get_absolute_url }}">{{ sourcepilot.pilot.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
+    <div><span class="bold">Upgrades:</span> {% for sourceupgrade in source.sourceupgrade_set.all %}<div><a href="{{ sourceupgrade.upgrade.get_absolute_url }}">{{ sourceupgrade.upgrade.name }}</a>{% if sourceupgrade.quantity > 1 %} (x{{ sourceupgrade.quantity }}){% endif %}</div>{% endfor %}</div>
+    {% if source.conditions.all %}
+    <div><span class="bold">Conditions:</span> {% for sourcecondition in source.sourcecondition_set.all %}<div><a href="{{ sourcecondition.condition.get_absolute_url }}">{{ sourcecondition.condition.name }}</a>{% if sourcecondition.quantity > 1 %} (x{{ sourcecondition.quantity }}){% endif %}</div>{% endfor %}</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

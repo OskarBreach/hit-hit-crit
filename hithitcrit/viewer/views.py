@@ -60,17 +60,17 @@ def upgrade_grid(request):
 
 def pilot_details(request, slug):
     pilot = get_object_or_404(Pilot, slug=slug)
-    template = loader.get_template('expanded_details.html')
+    template = loader.get_template('pilot_details.html')
     context = {
-        'pilot_list': (pilot,),
+        'pilot': pilot,
     }
     return HttpResponse(template.render(context, request))
 
 def upgrade_details(request, slug):
     upgrade = get_object_or_404(Upgrade, slug=slug)
-    template = loader.get_template('expanded_details.html')
+    template = loader.get_template('upgrade_details.html')
     context = {
-        'upgrade_list': (upgrade,),
+        'upgrade': upgrade,
     }
     return HttpResponse(template.render(context, request))
 
@@ -113,16 +113,16 @@ def slot_details(request, slug):
 
 def condition_details(request, slug):
     condition = get_object_or_404(Condition, slug=slug)
-    template = loader.get_template('expanded_details.html')
+    template = loader.get_template('condition_details.html')
     context = {
-        'condition_list': (condition,),
+        'condition': condition,
     }
     return HttpResponse(template.render(context, request))
 
 def source_details(request, slug):
     source = get_object_or_404(Source, slug=slug)
-    template = loader.get_template('expanded_details.html')
+    template = loader.get_template('source_details.html')
     context = {
-        'source_list': (source,),
+        'source': source,
     }
     return HttpResponse(template.render(context, request))

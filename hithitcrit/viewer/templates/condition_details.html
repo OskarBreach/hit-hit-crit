@@ -1,0 +1,26 @@
+{% extends "base_template.html" %}
+{% load static %}
+
+{% block title %}
+<title>{{ condition.name }}</title>
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static "viewer/expanded_details.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "viewer/grid.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="cardimage">
+    {% if condition.image %}
+    <img src="{{ condition.image.url }}"/>
+    {% endif %}
+  </div>
+  <div class="expandedinformation">
+    <div><span class="bold">Name:</span> <a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a></div>
+    <div><span class="bold">Unique:</span> {{ condition.unique }}</div>
+    <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
+  </div>
+</div>
+{% endblock %}
