@@ -1,7 +1,36 @@
-{% extends "object_grid.html" %}
+{% extends "base_template.html" %}
+{% load static %}
 
-{% block grid_type %}Pilot{%if object_list|length > 1 %}s{% endif %}{% endblock %}
+{% block title %}
+<title>Pilots</title>
+{% endblock %}
 
-{% block image-link %}<a href="{{ object.get_absolute_url }}"><img src="{{ object.image.url }}" class="card-image-full" alt="{{ object.name }}"//></a>{% endblock %}
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static "viewer/grid.css" %}">
+{% endblock %}
 
-{% block text-link %}<div class="card-link-box"><a class="object-link" href="{{ object.get_absolute_url }}">{{ object.name }}</a></div>{% endblock %}
+{% block content %}
+<div class="object-grid">
+{% for pilot in pilot_list %}
+  <div class="object">
+    {% if pilot.image %}
+    <a href="{{ pilot.get_absolute_url }}"><img src="{{ pilot.image.url }}" class="card-image-full" alt="{{ pilot.name }}"//></a>
+    {% endif %}
+    <div class="card-link-box"><a class="object-link" href="{{ pilot.get_absolute_url }}">{{ pilot.name }}</a></div>
+  </div>
+{% endfor %}
+<div class="pagination">
+  <span class="step-links">
+    {% if pilot_list.has_previous %}
+    <a href="?page={{ pilot_list.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current">
+      Page {{ pilot_list.number }} of {{ pilot_list.paginator.num_pages }}.
+    </span>
+    {% if pilot_list.has_next %}
+      <a href="?page={{ pilot_list.next_page_number }}">next</a>
+    {% endif %}
+  </span>
+</div>
+</div>
+{% endblock %}

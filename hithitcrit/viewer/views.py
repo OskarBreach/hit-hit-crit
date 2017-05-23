@@ -6,16 +6,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from xwingdata.models import Pilot, Upgrade, Ship, Faction, PrimaryFaction, Slot, Condition, Source
 
-def index(request):
-    template = loader.get_template('index.html')
-    context = {
-    }
-    return HttpResponse(template.render(context, request))
-
 def objects_by_name(request, slug):
     pilot_list = Pilot.objects.filter(name_slug=slug).order_by('ship', 'faction__primary_faction', 'skill', 'points', 'name', 'faction')
     upgrade_list = Upgrade.objects.filter(name_slug=slug).order_by('slot', 'points', 'name')
-    condition_list = Condition.objects.filter(name_slug=slug).order_by('points', 'name')
+    condition_list = Condition.objects.filter(name_slug=slug).order_by('name')
 
     if not (pilot_list or upgrade_list or condition_list):
         raise Http404
@@ -40,7 +34,7 @@ def pilot_grid(request):
     except EmptyPage:
         pilots = paginator.page(paginator.num_pages)
 
-    template = loader.get_template('grid.html')
+    template = loader.get_template('pilot_grid.html')
     context = {
         'pilot_list': pilots,
     }
@@ -58,7 +52,7 @@ def upgrade_grid(request):
     except EmptyPage:
         upgrades = paginator.page(paginator.num_pages)
 
-    template = loader.get_template('grid.html')
+    template = loader.get_template('upgrade_grid.html')
     context = {
         'upgrade_list': upgrades,
     }
@@ -93,7 +87,7 @@ def ship_details(request, slug):
 def faction_details(request, slug):
     faction = get_object_or_404(Faction, slug=slug)
     pilot_list = Pilot.objects.filter(faction=faction).order_by('ship', 'faction__primary_faction', 'skill', 'points', 'name', 'faction')
-    template = loader.get_template('grid.html')
+    template = loader.get_template('pilot_grid.html')
     context = {
         'pilot_list': pilot_list,
     }
@@ -102,7 +96,7 @@ def faction_details(request, slug):
 def primary_faction_details(request, slug):
     primary_faction = get_object_or_404(PrimaryFaction, slug=slug)
     pilot_list = Pilot.objects.filter(faction__primary_faction=primary_faction).order_by('ship', 'faction__primary_faction', 'skill', 'points', 'name', 'faction')
-    template = loader.get_template('grid.html')
+    template = loader.get_template('pilot_grid.html')
     context = {
         'pilot_list': pilot_list,
     }
@@ -111,7 +105,7 @@ def primary_faction_details(request, slug):
 def slot_details(request, slug):
     slot = get_object_or_404(Slot, slug=slug)
     upgrade_list = Upgrade.objects.filter(slot=slot).order_by('slot', 'points', 'name')
-    template = loader.get_template('grid.html')
+    template = loader.get_template('upgrade_grid.html')
     context = {
         'upgrade_list': upgrade_list,
     }

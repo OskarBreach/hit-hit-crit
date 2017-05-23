@@ -3,7 +3,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
     url(r'^(?i)name/(?P<slug>[\w-]+)/$', views.objects_by_name, name='objects-by-name'),
     url(r'^(?i)pilots/$', views.pilot_grid, name='pilot-grid'),
     url(r'^(?i)upgrades/$', views.upgrade_grid, name='upgrade-grid'),
