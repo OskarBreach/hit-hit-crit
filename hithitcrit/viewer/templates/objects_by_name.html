@@ -11,7 +11,7 @@
 
 {% block content %}
 {% if pilot_list %}
-<div class="bold">Pilot{%if pilot_list|length > 1 %}s{% endif %}</div>
+<div class="bold">Pilot{% if pilot_list|length > 1 %}s{% endif %}</div>
 <div class="object-grid">
   {% for pilot in pilot_list %}
   <div class="object">
@@ -23,7 +23,7 @@
 </div>
 {% endif %}
 {% if upgrade_list %}
-<div class="bold">Upgrade{%if upgrade_list|length > 1 %}s{% endif %}</div>
+<div class="bold">Upgrade{% if upgrade_list|length > 1 %}s{% endif %}</div>
 <div class="object-grid">
   {% for upgrade in upgrade_list %}
   <div class="object">
