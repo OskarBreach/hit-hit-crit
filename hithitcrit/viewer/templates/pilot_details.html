@@ -11,43 +11,5 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-  <div class="cardimage">
-    {% if pilot.image %}
-    <a href="{{ pilot.get_absolute_url }}"><img src="{{ pilot.image.url }}"/></a>
-    {% endif %}
-  </div>
-  <div class="expandedinformation">
-    <div><span class="bold">Name:</span> <a href="{% url 'objects-by-name' slug=pilot.name_slug %}">{{ pilot.name }}</a></div>
-    <div><span class="bold">Unique:</span> {{ pilot.unique }}</div>
-    <div><span class="bold">Ship:</span> <a href="{{ pilot.ship.get_absolute_url }}">{{ pilot.ship.name }}</a></div>
-    <div><span class="bold">Faction:</span> <a href="{{ pilot.faction.get_absolute_url }}">{{ pilot.faction.name }}</a> (<a href="{{ pilot.faction.primary_faction.get_absolute_url }}">{{ pilot.faction.primary_faction.name }}</a>)</div>
-    <div><span class="bold">Skill:</span> {% if pilot.skill_special_ruling %}*{% else %}{{ pilot.skill }}{% endif %}</div>
-    <div><span class="bold">Points:</span> {% if pilot.points_special_ruling %}-{% else %}{{ pilot.points }}{% endif %}</div>
-    {% if pilot.ship.epic_points %}
-    <div><span class="bold">Epic points:</span> {{ pilot.ship.epic_points }}</div>
-    {% endif %}
-    {% if pilot.ship.attack or pilot.attack_override %}
-    <div><span class="bold">Attack:</span> {% if pilot.attack_override %}{{ pilot.attack_override }}{% else %}{{ pilot.ship.attack }}{% endif %}</div>
-    {% endif %}
-    {% if pilot.range != "" %}
-    <div><span class="bold">Range:</span> {{ pilot.range }}</div>
-    {% endif %}
-    {% if pilot.ship.energy %}
-    <div><span class="bold">Energy:</span> {{ pilot.ship.energy }}</div>
-    {% endif %}
-    <div><span class="bold">Agility:</span> {% if pilot.agility_override %}{{ pilot.agility_override }}{% else %}{{ pilot.ship.agility }}{% endif %}</div>
-    <div><span class="bold">Hull:</span> {% if pilot.hull_override %}{{ pilot.hull_override }}{% else %}{{ pilot.ship.hull }}{% endif %}</div>
-    <div><span class="bold">Shields:</span> {% if pilot.shields_override %}{{ pilot.shields_override }}{% else %}{{ pilot.ship.shields }}{% endif %}</div>
-    <div><span class="bold">Slots:</span> {% for slot in pilot.pilotslot_set.all %}<a href="{{ slot.slot.get_absolute_url }}">{{ slot.slot.name }}</a>{% if slot.quantity > 1 %} (x{{ slot.quantity }}){% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-    <div><span class="bold">Actions:</span> {% for action in pilot.ship.actions.all %}{{ action.action }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-    {% if pilot.conditions.all %}
-    <div><span class="bold">Conditions:</span> {% for condition in pilot.conditions.all %}<a href="{{ condition.get_absolute_url }}">{{ condition.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-    {% endif %}
-    {% if pilot.text %}
-    <div><span class="bold">Text:</span> {{ pilot.text }}</div>
-    {% endif %}
-    <div><span class="bold">Found in:</span> {% for sourcepilot in pilot.sourcepilot_set.all %}<div><a href="{{ sourcepilot.source.get_absolute_url }}">{{ sourcepilot.source.name }}</a>{% if sourcepilot.quantity > 1 %} (x{{ sourcepilot.quantity }}){% endif %}</div>{% endfor %}</div>
-  </div>
-</div>
+{% include "expanded_pilot.html" %}
 {% endblock %}

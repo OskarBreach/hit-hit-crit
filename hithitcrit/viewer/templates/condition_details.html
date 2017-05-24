@@ -11,19 +11,5 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-  <div class="cardimage">
-    {% if condition.image %}
-    <img src="{{ condition.image.url }}"/>
-    {% endif %}
-  </div>
-  <div class="expandedinformation">
-    <div><span class="bold">Name:</span> {{ condition.name }}</div>
-    <div><span class="bold">Unique:</span> {{ condition.unique }}</div>
-    <div><span class="bold">Found in:</span> {% for source in condition.source_set.all %}<div><a href="{{ source.get_absolute_url }}">{{ source.name }}</a></div>{% endfor %}</div>
-    <div><span class="bold">Text:</span> {{ condition.text }}</div>
-    <div><span class="bold">Pilots:</span> {% for pilot in condition.pilot_set.all %}<div><a href="{{ pilot.get_absolute_url }}">{{ pilot.name }}</a></div>{% endfor %}</div>
-    <div><span class="bold">Upgrades:</span> {% for upgrade in condition.upgrade_set.all %}<div><a href="{{ upgrade.get_absolute_url }}">{{ upgrade.name }}</a></div>{% endfor %}</div>
-  </div>
-</div>
+{% include "expanded_condition.html" %}
 {% endblock %}
