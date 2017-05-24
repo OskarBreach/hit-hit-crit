@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block content %}
+{% if pilot_list %}
+<div class="bold">Pilot{%if pilot_list|length > 1 %}s{% endif %}</div>
 <div class="object-grid">
   {% for pilot in pilot_list %}
   <div class="object">
@@ -19,14 +21,17 @@
   </div>
   {% endfor %}
 </div>
+{% endif %}
+{% if upgrade_list %}
+<div class="bold">Upgrade{%if upgrade_list|length > 1 %}s{% endif %}</div>
 <div class="object-grid">
   {% for upgrade in upgrade_list %}
   <div class="object">
     {% if upgrade.image %}
     <a href="{{ upgrade.get_absolute_url }}"><img src="{{ upgrade.image.url }}" class="card-image-half" alt="{{ upgrade.name }}"/></a>
     {% endif %}
-    <div class="card-link-box"><a class="object-link" href="{{ upgrade.get_absolute_url }}">{{ upgrade.name }}</a></div>
   </div>
   {% endfor %}
 </div>
+{% endif %}
 {% endblock %}
