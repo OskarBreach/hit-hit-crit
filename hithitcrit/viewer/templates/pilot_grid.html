@@ -19,6 +19,7 @@
     <div class="card-link-box"><a class="object-link" href="{{ pilot.get_absolute_url }}">{{ pilot.name }}</a></div>
   </div>
   {% endfor %}
+</div>
 <div class="pagination">
   <span class="step-links">
     {% if pilot_list.has_previous %}
@@ -31,6 +32,5 @@
       <a href="?page={{ pilot_list.next_page_number }}">next</a>
     {% endif %}
   </span>
-</div>
 </div>
 {% endblock %}
