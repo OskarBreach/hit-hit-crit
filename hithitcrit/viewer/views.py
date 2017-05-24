@@ -9,16 +9,20 @@ from xwingdata.models import Pilot, Upgrade, Ship, Faction, PrimaryFaction, Slot
 def objects_by_name(request, slug):
     pilot_list = Pilot.objects.filter(name_slug=slug).order_by('ship', 'faction__primary_faction', 'skill', 'points', 'name', 'faction')
     upgrade_list = Upgrade.objects.filter(name_slug=slug).order_by('slot', 'points', 'name')
-    condition_list = Condition.objects.filter(name_slug=slug).order_by('name')
 
-    if not (pilot_list or upgrade_list or condition_list):
+    if not (pilot_list or upgrade_list):
         raise Http404
 
-    template = loader.get_template('expanded_details.html')
+    if pilot_list:
+        name = pilot_list[0].name
+    else:
+        name = ugrade_list[0].name
+
+    template = loader.get_template('objects_by_name.html')
     context = {
+        'name': name,
         'pilot_list': pilot_list,
         'upgrade_list': upgrade_list,
-        'condition_list': condition_list,
     }
     return HttpResponse(template.render(context, request))
 

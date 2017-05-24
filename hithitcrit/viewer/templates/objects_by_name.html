@@ -1,0 +1,32 @@
+{% extends "base_template.html" %}
+{% load static %}
+
+{% block title %}
+<title>{{ name }}</title>
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static "viewer/grid.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="object-grid">
+  {% for pilot in pilot_list %}
+  <div class="object">
+    {% if pilot.image %}
+    <a href="{{ pilot.get_absolute_url }}"><img src="{{ pilot.image.url }}" class="card-image-full" alt="{{ pilot.name }}"/></a>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+<div class="object-grid">
+  {% for upgrade in upgrade_list %}
+  <div class="object">
+    {% if upgrade.image %}
+    <a href="{{ upgrade.get_absolute_url }}"><img src="{{ upgrade.image.url }}" class="card-image-half" alt="{{ upgrade.name }}"/></a>
+    {% endif %}
+    <div class="card-link-box"><a class="object-link" href="{{ upgrade.get_absolute_url }}">{{ upgrade.name }}</a></div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
