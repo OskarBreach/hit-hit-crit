@@ -25,10 +25,12 @@
             </ul>
         </div>
 
-        <div class="content">
-            {% block content %}
-            Invalid Page...
-            {% endblock %}
+        <div class="wrapper"> <!-- Necessary to keep nav bar + footer in the right place --> 
+            <div class="content">
+                {% block content %}
+                Invalid Page...
+                {% endblock %}
+            </div>
         </div>
 
         <div class="footer">
