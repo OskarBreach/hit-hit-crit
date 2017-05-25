@@ -1,7 +1,36 @@
-{% extends "object_grid.html" %}
+{% extends "base_template.html" %}
+{% load static %}
 
-{% block grid_type %}Upgrade{%if object_list|length > 1 %}s{% endif %}{% endblock %}
+{% block title %}
+<title>Upgrades</title>
+{% endblock %}
 
-{% block image-link %}<a href="{{ object.get_absolute_url }}"><img src="{{ object.image.url }}" class="card-image-half" alt="{{ object.name }}"//></a>{% endblock %}
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static "viewer/grid.css" %}">
+{% endblock %}
 
-{% block text-link %}<div class="half-card-link-box"><a class="object-link" href="{{ object.get_absolute_url }}">{{ object.name }}</a></div>{% endblock %}
+{% block content %}
+<div class="object-grid">
+  {% for upgrade in upgrade_list %}
+  <div class="object">
+    {% if upgrade.image %}
+    <a href="{{ upgrade.get_absolute_url }}"><img src="{{ upgrade.image.url }}" class="card-image-half" alt="{{ upgrade.name }}"/></a>
+    {% endif %}
+    <div class="card-link-box"><a class="object-link" href="{{ upgrade.get_absolute_url }}">{{ upgrade.name }}</a></div>
+  </div>
+  {% endfor %}
+</div>
+<div class="pagination">
+  <span class="step-links">
+    {% if upgrade_list.has_previous %}
+    <a href="?page={{ upgrade_list.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current">
+      Page {{ upgrade_list.number }} of {{ upgrade_list.paginator.num_pages }}
+    </span>
+    {% if upgrade_list.has_next %}
+      <a href="?page={{ upgrade_list.next_page_number }}">next</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base_template.html" %}
+{% load static %}
+
+{% block title %}
+<title>{{ condition.name }}</title>
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static "viewer/expanded_details.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "viewer/grid.css" %}">
+{% endblock %}
+
+{% block content %}
+{% include "expanded_condition.html" %}
+{% endblock %}
