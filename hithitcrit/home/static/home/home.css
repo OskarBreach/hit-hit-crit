@@ -15,29 +15,43 @@ ul.nav_bar {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #D30100;
     position: fixed;
     top: 0;
     width: 100%;
-    height: 45px;
+    height: 35px;
 }
 
 .nav_bar li {
     float:left;
-    border-right: 1px solid #bbb;
+    border-right: 1px solid #000000;
     font-weight: bold;
+}
+
+img.logo {
+    height: 35px;
+    width: 35px;
+}
+
+.nav_bar li a.logo {
+    padding: 0px;
+    border: 0px;
+}
+
+.nav_bar li a.logo:hover {
+    opacity: 0.8;
 }
 
 .nav_bar li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 8px 16px;
     text-decoration: none;
 }
 
 .nav_bar li a:hover {
-    background-color: #111;
+    background-color: #B50100;
 }
 
 /* Main content */
