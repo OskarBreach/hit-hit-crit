@@ -8,6 +8,7 @@
         {% block header %}
         {% endblock %}
         <link rel="stylesheet" type="text/css" href="{% static "home/home.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "home/nav_bar.css" %}">
         <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     </head>
@@ -17,7 +18,14 @@
                 <li><a class="logo" href="/home/"><img class="logo" src="{% static "home/Logo.png" %}"></a></li>
                 <li><a href="/squad_builder/">New Squad</a></li>
                 <li><a href="/squad_builder/">Your Squads</a></li>
-                <li><a href="/viewer/pilots/">Cards</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-button">Cards</a>
+                    <div class="dropdown-content">
+                        <a href="/viewer/pilots/">Pilots</a>
+                        <a href="/viewer/upgrades/">Upgrades</a>
+                        <a href="/viewer/conditions/">Conditions</a>
+                    </div>
+                </li>
                 <li><a href="/viewer/pilots/">Ships</a></li>
                 <li><a href="/viewer/pilots/">Sets</a></li>
                 <li><a href="/viewer/pilots/">Log In</a></li>
