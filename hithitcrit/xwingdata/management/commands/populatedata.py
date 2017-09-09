@@ -53,6 +53,7 @@ class Command(BaseCommand):
             Action(action="Jam"),
             Action(action="Recover"),
             Action(action="Reinforce"),
+            Action(action="Reload"),
             Action(action="Rotate Arc"),
             Action(action="SLAM"),
             Action(action="Target Lock"),
@@ -156,6 +157,7 @@ class Command(BaseCommand):
         Action.objects.using(db_alias).filter(action="Jam").delete()
         Action.objects.using(db_alias).filter(action="Recover").delete()
         Action.objects.using(db_alias).filter(action="Reinforce").delete()
+        Action.objects.using(db_alias).filter(action="Reload").delete()
         Action.objects.using(db_alias).filter(action="Rotate Arc").delete()
         Action.objects.using(db_alias).filter(action="SLAM").delete()
         Action.objects.using(db_alias).filter(action="Target Lock").delete()
@@ -437,11 +439,10 @@ class Command(BaseCommand):
             if 'upgrades' in contents:
                 for upgrade in contents['upgrades']:
                     SourceUpgrade.objects.create(source=new_source[0], upgrade=Upgrade.objects.get(pk=upgrade), quantity=contents['upgrades'][upgrade])
-            #TODO: Quantity for conditions not supported upstream yet
             new_source[0].conditions.clear()
             if 'conditions' in contents:
                 for condition in contents['conditions']:
-                   SourceCondition.objects.create(source=new_source[0], condition=Condition.objects.get(pk=condition), quantity=1)
+                   SourceCondition.objects.create(source=new_source[0], condition=Condition.objects.get(pk=condition), quantity=contents['conditions'][condition])
 
     def rollback_sources(self):
         pass
